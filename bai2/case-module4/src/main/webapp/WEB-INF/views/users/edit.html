@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Title</title>
+    <!-- Bootstrap 5 CDN -->
+</head>
+<body>
+<section layout:fragment="content">
+    <!--- Form create user --->
+    <div class="card">
+        <div class="card-header">
+            Create user
+        </div>
+        <div class="card-body">
+            <form th:object="${user}" class="form" th:action="@{/users/{id}/update(id=${user.getId()})}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" th:field="${user.username}" class="form-control" id="username" aria-describedby="usernameHelp" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" th:field="${user.email}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" th:field="${user.phone}"  id="phone" name="phone">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/users" class="btn btn-secondary">Back to list</a>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

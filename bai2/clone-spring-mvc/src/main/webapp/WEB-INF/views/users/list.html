@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Page navigation example</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <h1 class="mt-5">User List</h1>
+        <a class="btn btn-success" href="/users/create">Create user</a>
+
+        <form th:action="@{/users}" method="get">
+            <select name="departmentId" class="form-select" onchange="this.form.submit()">
+                <option value="">All Departments</option>
+                <option th:each="dept : ${departments}"
+                        th:value="${dept.id}"
+                        th:text="${dept.name}"
+                        th:selected="${selectedDepartmentId == dept.id}"></option>
+            </select>
+        </form>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <!-- Previous page -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/users(page=${currentPage}, size=5, departmentId=${selectedDepartmentId})}">Previous</a>
+                </li>
+
+                <!-- Page numbers -->
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                    th:classappend="${currentPage + 1 == i} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{/users(page=${i}, size=5, departmentId=${selectedDepartmentId})}"
+                       th:text="${i}"></a>
+                </li>
+
+                <!-- Next page -->
+                <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/users(page=${currentPage + 2}, size=5, departmentId=${selectedDepartmentId})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+        <table class="table table-striped mt-3">
+            <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Department</th>
+                <th scope="col">Role</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user, userStat : ${users}">
+                <td th:text="${userStat.index + 1}"></td>
+                <td th:text="${user.getUsername()}"></td>
+                <th><img width="50" th:src="@{/uploads/{url}(url=${user.getImageUrl()})}" alt=""></th>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getPhone()}"></td>
+                <td th:text="${user.getDepartmentName()}"></td>
+                <td th:text="${user.roleName}"></td>
+                <td>
+                    <a th:href="@{/users/{id}/detail(id=${user.getId()})}">Detail</a>
+                    <a class="btn btn-danger" onclick="return confirm('Are you sure')" th:href="@{/users/{id}/delete(id=${user.getId()})}">Delete</a>
+                    <a class="btn btn-primary" th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

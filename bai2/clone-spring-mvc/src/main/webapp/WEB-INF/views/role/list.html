@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Role List</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <h1 class="mt-5">Roles List</h1>
+        <a class="btn btn-success mb-3" th:href="@{/roles/create}">+ Add Role</a>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Role Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="role : ${roles}">
+                <td th:text="${role.id}"></td>
+                <td th:text="${role.name}"></td>
+                <td>
+                    <a class="btn btn-primary btn-sm" th:href="@{/roles/{id}/edit(id=${role.id})}">Edit</a>
+
+                    <a th:href="@{/roles/{id}/delete(id=${role.id})}"
+                       onclick="return confirm('Are you sure you want to delete this role?');">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

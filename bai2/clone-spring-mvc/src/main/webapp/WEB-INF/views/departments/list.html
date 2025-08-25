@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>List Departments</title>
+    <!-- Bootstrap 5 -->
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Departments List</h4>
+            <a th:href="@{/department/create}" class="btn btn-primary btn-sm">+ Add</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Department Name</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="dept : ${departments}">
+                    <td th:text="${dept.id}"></td>
+                    <td th:text="${dept.name}"></td>
+                    <td>
+                        <a th:href="@{/department/{id}/edit(id=${dept.id})}"
+                           class="btn btn-warning btn-sm">Edit</a>
+                        <a th:href="@{/department/delete/{id}(id=${dept.id})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this department?')">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</body>
+</html>

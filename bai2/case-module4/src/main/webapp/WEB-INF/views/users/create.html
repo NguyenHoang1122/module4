@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Title</title>
+    <!-- Bootstrap 5 CDN -->
+</head>
+<body>
+<section layout:fragment="content">
+    <!--- Form create user --->
+    <div class="card">
+        <div class="card-header">
+            Create user
+        </div>
+        <div class="card-body">
+            <form th:object="${user}" class="form" th:action="@{/users/store}" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" th:field="${user.username}" class="form-control" id="username" aria-describedby="usernameHelp" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" th:field="${user.image}" class="form-control" id="image" aria-describedby="usernameHelp" name="image">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" th:field="${user.email}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" th:field="${user.password}"  class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" th:field="${user.phone}"  id="phone" name="phone">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/users" class="btn btn-secondary">Back to list</a>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

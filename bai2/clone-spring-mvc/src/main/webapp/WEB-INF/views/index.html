@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        body { padding-top: 70px; }
+        .product { margin-bottom: 30px; }
+        .product img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .jumbotron {
+            background: #f5f5f5;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Cho video xuống dưới */
+            object-fit: cover;
+        }
+        .jumbotron {
+            background: rgba(255, 255, 255, 0.2); /* nền trắng, trong suốt 60% */
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center; /* chữ vẫn căn giữa */
+            margin-top: 10px;
+        }
+    </style>
+    <video autoplay muted loop id="bg-video">
+        <source src="/uploads/background.mp4" type="video/mp4">
+    </video>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            User management
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/users">Show list</a></li>
+                            <li><a class="dropdown-item" href="/users/create">Add new</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Department
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/department">Show list</a></li>
+                            <li><a class="dropdown-item" href="/department/create">Add new</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Role management
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/roles">Show list</a></li>
+                            <li><a class="dropdown-item" href="/roles/create">Add new</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <!-- Banner -->
+    <div class="jumbotron">
+        <h1>Welcome to MySpringApp!</h1>
+        <p>This is a sample homepage for your Spring MVC project.</p>
+    </div>
+
+    <!-- Sản phẩm -->
+    <h2 class="section-title" >Featured Products</h2>
+    <div class="row text-center">
+        <div class="col-sm-4 product">
+            <img th:src="@{/uploads/holy.jpg}" alt="Trỹ Khuê"/>
+            <h3>
+                <a th:href="@{https://jp.pinterest.com/pin/729090627215120205/}" target="_blank">
+                    Trỹ Khuê
+                </a>
+            </h3>
+        </div>
+
+        <div class="col-sm-4 product">
+            <img th:src="@{/uploads/tuyetky.jpg}" alt="Lục Tuyết Kỳ"/>
+            <h3>
+                <a th:href="@{https://jp.pinterest.com/pin/421086633930373169/}" target="_blank">
+                    Lục Tuyết Kỳ
+                </a>
+            </h3>
+        </div>
+        <div class="col-sm-4 product">
+            <img th:src="@{/uploads/vvt.jpg}" alt="Vân Vọng Thư"/>
+            <h3>
+                <a th:href="@{https://jp.pinterest.com/pin/393431717470779851/}" target="_blank">
+                    Vân Vọng Thư
+                </a>
+            </h3>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
+</body>
+</html>
