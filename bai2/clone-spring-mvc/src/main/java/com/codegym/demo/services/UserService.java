@@ -23,23 +23,34 @@ import java.util.*;
 
 @Service
 public class UserService {
-    private static final String UPLOAD_DIR = "C:/codegym/module4/bai2/clone-spring-mvc/uploads";
+    private static final String UPLOAD_DIR = "C:/codegym/module4/bai2/clone-spring-mvc/uploads/";
     private final IUserRepository userRepository;
     private final IDepartmentRepository departmentRepository;
-    private final FileManager fileManager;
     private final IRoleRepository roleRepository;
+    private final FileManager fileManager;
 
     public UserService(IUserRepository userRepository,
                        IDepartmentRepository departmentRepository,
-                       FileManager fileManager,
-                       IRoleRepository roleRepository) {
+                       IRoleRepository roleRepository,
+                       FileManager fileManager) {
         this.userRepository = userRepository;
         this.departmentRepository = departmentRepository;
-        this.fileManager = fileManager;
         this.roleRepository = roleRepository;
+        this.fileManager = fileManager;
     }
 
-    // Lấy danh sách user có phân trang
+    // ✅ Validation ảnh
+    private boolean isValidImage(MultipartFile file) {
+        String contentType = file.getContentType();
+        long maxSize = 5 * 1024 * 1024; // 5MB
+        return contentType != null &&
+                (contentType.equals("image/jpeg")
+                        || contentType.equals("image/png")
+                        || contentType.equals("image/gif")) &&
+                file.getSize() <= maxSize;
+    }
+
+    // ✅ Lấy danh sách user có phân trang
     public ListUserResponse getAllUsers(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
         Page<User> data = userRepository.findAll(pageable);
@@ -65,21 +76,17 @@ public class UserService {
         return response;
     }
 
-    // Xóa user theo ID
+    // ✅ Xóa user
     public void deleteById(Long id) {
-        Optional<User> userOpt = userRepository.findById(id);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            if (user.getImageUrl() != null) {
-                fileManager.deleteFile(UPLOAD_DIR + "/" + user.getImageUrl());
-            }
-            userRepository.delete(user);
-        } else {
-            throw new RuntimeException("User not found with id: " + id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        if (user.getImageUrl() != null) {
+            fileManager.deleteFile(UPLOAD_DIR + "/" + user.getImageUrl());
         }
+        userRepository.delete(user);
     }
 
-    // Thêm mới user
+    // ✅ Thêm mới user
     public void storeUser(CreateUserDTO dto) throws IOException {
         User newUser = new User();
         newUser.setName(dto.getUsername());
@@ -89,19 +96,20 @@ public class UserService {
 
         // Role
         if (dto.getRoleId() != null) {
-            Role role = roleRepository.findById(dto.getRoleId()).orElse(null);
-            newUser.setRole(role);
+            roleRepository.findById(dto.getRoleId()).ifPresent(newUser::setRole);
         }
 
         // Department
         if (dto.getDepartmentId() != null) {
-            Department department = departmentRepository.findById(dto.getDepartmentId()).orElse(null);
-            newUser.setDepartment(department);
+            departmentRepository.findById(dto.getDepartmentId()).ifPresent(newUser::setDepartment);
         }
 
         // Image
         MultipartFile file = dto.getImage();
         if (file != null && !file.isEmpty()) {
+            if (!isValidImage(file)) {
+                throw new IllegalArgumentException("Invalid file format or file too large (max 5MB, jpg/png/gif only).");
+            }
             String fileName = fileManager.uploadFile(UPLOAD_DIR, file);
             newUser.setImageUrl(fileName);
         }
@@ -109,7 +117,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    // Lấy user theo ID
+    // ✅ Lấy user theo ID
     public UserDTO getUserById(Long id) {
         return userRepository.findById(id).map(u -> {
             UserDTO dto = new UserDTO();
@@ -124,50 +132,82 @@ public class UserService {
         }).orElse(null);
     }
 
-    // Cập nhật user
+    // ✅ Cập nhật user
     public void updateUser(Long id, EditUserDTO dto) throws IOException {
-        Optional<User> userOpt = userRepository.findById(id);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            user.setName(dto.getUsername());
-            user.setEmail(dto.getEmail());
-            user.setPhone(dto.getPhone());
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-            // Cập nhật department
-            if (dto.getDepartmentId() != null) {
-                Department department = departmentRepository.findById(dto.getDepartmentId()).orElse(null);
-                user.setDepartment(department);
-            }
+        user.setName(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        user.setPhone(dto.getPhone());
 
-            // Cập nhật role
-            if (dto.getRoleId() != null) {
-                Role role = roleRepository.findById(dto.getRoleId()).orElse(null);
-                user.setRole(role);
-            }
-
-            // Cập nhật ảnh
-            MultipartFile file = dto.getImage();
-            if (file != null && !file.isEmpty()) {
-                if (user.getImageUrl() != null) {
-                    fileManager.deleteFile(UPLOAD_DIR + "/" + user.getImageUrl());
-                }
-                String fileName = fileManager.uploadFile(UPLOAD_DIR, file);
-                user.setImageUrl(fileName);
-            }
-
-            userRepository.save(user);
+        // Department
+        if (dto.getDepartmentId() != null) {
+            departmentRepository.findById(dto.getDepartmentId()).ifPresent(user::setDepartment);
         }
+
+        // Role
+        if (dto.getRoleId() != null) {
+            roleRepository.findById(dto.getRoleId()).ifPresent(user::setRole);
+        }
+
+        // Image
+        MultipartFile file = dto.getImage();
+        if (file != null && !file.isEmpty()) {
+            if (!isValidImage(file)) {
+                throw new IllegalArgumentException("Invalid file format or file too large (max 5MB, jpg/png/gif only).");
+            }
+            // Xóa file cũ chỉ khi upload file mới
+            if (user.getImageUrl() != null) {
+                fileManager.deleteFile(UPLOAD_DIR + "/" + user.getImageUrl());
+            }
+            String fileName = fileManager.uploadFile(UPLOAD_DIR, file);
+            user.setImageUrl(fileName);
+        }
+        // Nếu file rỗng, giữ nguyên ảnh cũ
+
+        userRepository.save(user);
     }
-    // Lấy danh sách user theo departmentId có phân trang
+
+    // ✅ Lấy danh sách user theo departmentId (phân trang)
     public ListUserResponse getUsersByDepartment(Long departmentId, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
         Page<User> data;
 
         if (departmentId == null || departmentId == 0) {
-            // Nếu không chọn phòng ban thì lấy tất cả user
             data = userRepository.findAll(pageable);
         } else {
             data = userRepository.findByDepartmentId(departmentId, pageable);
+        }
+
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : data.getContent()) {
+            UserDTO dto = new UserDTO();
+            dto.setId(user.getId());
+            dto.setUsername(user.getName());
+            dto.setEmail(user.getEmail());
+            dto.setPhone(user.getPhone());
+            dto.setImageUrl(user.getImageUrl());
+            dto.setDepartmentName(user.getDepartment() != null ? user.getDepartment().getName() : "No Department");
+            dto.setRoleName(user.getRole() != null ? user.getRole().getName() : "No Role");
+            userDTOs.add(dto);
+        }
+
+        ListUserResponse response = new ListUserResponse();
+        response.setTotalPage(data.getTotalPages());
+        response.setCurrentPage(data.getNumber());
+        response.setUsers(userDTOs);
+
+        return response;
+    }
+    public ListUserResponse searchUsers(String keyword, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
+
+        Page<User> data;
+        if (keyword == null || keyword.isEmpty()) {
+            data = userRepository.findAll(pageable);
+        } else {
+            data = userRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(keyword, keyword, pageable);
         }
 
         List<UserDTO> userDTOs = new ArrayList<>();

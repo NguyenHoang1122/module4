@@ -3,19 +3,33 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>List Departments</title>
-    <!-- Bootstrap 5 -->
+    <title>Departments List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn + .btn { margin-left: 5px; }
+        .filter-search { gap: 10px; margin-bottom: 20px; }
+    </style>
 </head>
 <body>
-<section layout:fragment="content">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Departments List</h4>
-            <a th:href="@{/department/create}" class="btn btn-primary btn-sm">+ Add</a>
+<section layout:fragment="content" class="container py-5">
+    <div class="card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Departments List</h2>
+            <a class="btn btn-success" th:href="@{/department/create}">+ Add Department</a>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped">
-                <thead>
+
+        <div class="d-flex filter-search">
+            <form th:action="@{/department}" method="get" class="flex-grow-1 me-2">
+                <input type="text" name="keyword" class="form-control" placeholder="Search by department name" th:value="${keyword}">
+            </form>
+            <button class="btn btn-primary" onclick="this.closest('form').submit()">Search</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead class="table-dark">
                 <tr>
                     <th>ID</th>
                     <th>Department Name</th>
@@ -27,11 +41,8 @@
                     <td th:text="${dept.id}"></td>
                     <td th:text="${dept.name}"></td>
                     <td>
-                        <a th:href="@{/department/{id}/edit(id=${dept.id})}"
-                           class="btn btn-warning btn-sm">Edit</a>
-                        <a th:href="@{/department/delete/{id}(id=${dept.id})}"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Delete this department?')">Delete</a>
+                        <a class="btn btn-warning btn-sm" th:href="@{/department/{id}/edit(id=${dept.id})}">Edit</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/department/delete/{id}(id=${dept.id})}" onclick="return confirm('Delete this department?')">Delete</a>
                     </td>
                 </tr>
                 </tbody>

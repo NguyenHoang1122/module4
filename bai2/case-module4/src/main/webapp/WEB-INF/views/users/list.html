@@ -7,35 +7,59 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <div class="container">
-        <h1 class="mt-5">User List</h1>
-        <a class="btn btn-success" href="/users/create">Create user</a>
-        <table class="table table-striped mt-3">
-            <thead>
-            <tr>
-                <th scope="col">STT</th>
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user, userStat : ${users}">
-                <td th:text="${userStat.index + 1}"></td>
-                <td th:text="${user.getUsername()}"></td>
-                <th><img width="150" th:src="@{${user.getImageUrl()}}" alt=""></th>
-                <td th:text="${user.getEmail()}"></td>
-                <td th:text="${user.getPhone()}"></td>
-                <td>
-                    <a th:href="@{/users/{id}/detail(id=${user.getId()})}">Detail</a>
-                    <a class="btn btn-danger" onclick="return confirm('Are you sure')" th:href="@{/users/{id}/delete(id=${user.getId()})}">Delete</a>
-                    <a class="btn btn-primary" th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container mt-2">
+       <div class="card">
+              <div class="card-header">
+                User List
+                  <a class="btn btn-success" href="/users/create">Create user</a>
+              </div>
+              <div class="card-body">
+                  <div class="justify-content-between d-flex">
+                      <form th:action="@{/users/search}" method="get">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="keyword">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                            </div>
+                      </form>
+                      <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                              <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}"><a class="page-link" th:href="@{/users(page=${i},size=5)}" th:text="${i}"></a></li>
+                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                          </ul>
+                      </nav>
+                  </div>
+
+                  <table class="table table-striped mt-3">
+                      <thead>
+                      <tr>
+                          <th scope="col">STT</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Phone</th>
+                          <th scope="col">Department</th>
+                          <th scope="col">Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="user, userStat : ${users}">
+                          <td th:text="${userStat.index + 1}"></td>
+                          <td th:text="${user.getUsername()}"></td>
+                          <th><img width="150" th:src="@{/resources/uploads/{url}(url=${user.getImageUrl()})}" alt=""></th>
+                          <td th:text="${user.getEmail()}"></td>
+                          <td th:text="${user.getPhone()}"></td>
+                          <td th:text="${user.getDepartmentName()}"></td>
+                          <td>
+                              <a class="btn btn-danger" onclick="return confirm('Are you sure')" th:href="@{/users/{id}/delete(id=${user.getId()})}">Delete</a>
+                              <a class="btn btn-primary" th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+       </div>
+
     </div>
 </section>
 </body>

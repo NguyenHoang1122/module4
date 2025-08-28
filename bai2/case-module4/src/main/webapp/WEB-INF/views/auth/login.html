@@ -114,9 +114,9 @@
                 </div>
             </div>
             <div class="card-body">
-                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-                    <span th:text="${errorMessage}">Error message goes here</span>
-                </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                        <span th:text="${errorMessage}">Error message goes here</span>
+                    </div>
                 <form action="/auth/login" method="post">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
@@ -153,3 +153,4 @@
 <script th:src="@{/resources/static/js/login.js}"></script>
 </body>
 </html>
+

@@ -1,1 +1,1 @@
-alert("Helllo CodeGym!!!");
+alert("Js oke")

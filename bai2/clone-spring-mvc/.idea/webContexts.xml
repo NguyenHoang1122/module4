@@ -5,6 +5,8 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/departments/edit.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/departments" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/departments/list.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/departments" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/role/edit.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/role" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/users/edit.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/users" />
       </map>
     </option>
   </component>

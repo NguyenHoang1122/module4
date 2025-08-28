@@ -66,6 +66,12 @@
             <version>5.1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
         <!-- JDBC driver (ví dụ MySQL) -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -79,6 +85,33 @@
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.1.Final</version>
         </dependency>
+
+        <!--- Logging (SLF4J + Logback) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.6</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.7</version>
+        </dependency>
+
+        <!--- AOP -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>6.2.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>commons-io</groupId>
@@ -97,13 +130,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>3.2.0</version>
-        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>

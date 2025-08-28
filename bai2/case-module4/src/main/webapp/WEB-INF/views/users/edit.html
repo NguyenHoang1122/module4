@@ -3,30 +3,76 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Title</title>
+    <title>Edit User</title>
     <!-- Bootstrap 5 CDN -->
 </head>
 <body>
 <section layout:fragment="content">
-    <!--- Form create user --->
+    <!--- Form edit user --->
     <div class="card">
         <div class="card-header">
-            Create user
+            Edit user
         </div>
         <div class="card-body">
-            <form th:object="${user}" class="form" th:action="@{/users/{id}/update(id=${user.getId()})}" method="post">
+            <form th:object="${user}" class="form" th:action="@{/users/{id}/update(id=${user.id})}" method="post" enctype="multipart/form-data">
+
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" th:field="${user.username}" class="form-control" id="username" aria-describedby="usernameHelp" name="username">
+                    <input type="text"
+                           th:field="*{username}"
+                           th:class="${#fields.hasErrors('username') ? 'form-control is-invalid' : 'form-control'}"
+                           id="username">
+                    <div th:if="${#fields.hasErrors('username')}" class="invalid-feedback">
+                        <span th:errors="*{username}"></span>
+                    </div>
                 </div>
+
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" th:field="${user.email}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file"
+                           th:field="*{image}"
+                           th:class="${#fields.hasErrors('image') ? 'form-control is-invalid' : 'form-control'}"
+                           id="image">
+                    <div th:if="${#fields.hasErrors('image')}" class="invalid-feedback">
+                        <span th:errors="*{image}"></span>
+                    </div>
                 </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email"
+                           th:field="*{email}"
+                           th:class="${#fields.hasErrors('email') ? 'form-control is-invalid' : 'form-control'}"
+                           id="email">
+                    <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+                        <span th:errors="*{email}"></span>
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control" th:field="${user.phone}"  id="phone" name="phone">
+                    <input type="text"
+                           th:field="*{phone}"
+                           th:class="${#fields.hasErrors('phone') ? 'form-control is-invalid' : 'form-control'}"
+                           id="phone">
+                    <div th:if="${#fields.hasErrors('phone')}" class="invalid-feedback">
+                        <span th:errors="*{phone}"></span>
+                    </div>
                 </div>
+
+                <div class="mb-3">
+                    <label for="departments" class="form-label">Department</label>
+                    <select class="form-select"
+                            th:field="*{departmentId}"
+                            id="departments">
+                        <option value="" selected>Choose a department</option>
+                        <option th:each="department : ${departments}"
+                                th:value="${department.id}"
+                                th:text="${department.name}"
+                                th:selected="${user.departmentId == department.id}"></option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="/users" class="btn btn-secondary">Back to list</a>
             </form>

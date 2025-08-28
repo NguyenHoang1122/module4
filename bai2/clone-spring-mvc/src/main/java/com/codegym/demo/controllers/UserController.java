@@ -9,6 +9,9 @@ import com.codegym.demo.models.User;
 import com.codegym.demo.services.DepartmentService;
 import com.codegym.demo.services.RoleService;
 import com.codegym.demo.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,23 +28,34 @@ public class UserController {
     private final UserService userService;
     private final DepartmentService departmentService;
     private final RoleService roleService;
+    private final HttpSession httpSession;
 
-    public UserController(UserService userService, DepartmentService departmentService, RoleService roleService) {
+    public UserController(UserService userService, DepartmentService departmentService, RoleService roleService, HttpSession httpSession) {
         this.userService = userService;
         this.departmentService = departmentService;
         this.roleService = roleService;
+        this.httpSession = httpSession;
     }
 
     @GetMapping
-    public String listUsers(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+    public String listUsers(@CookieValue(value = "counter", defaultValue = "1") String counter,
+                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                             @RequestParam(value = "size", required = false, defaultValue = "5") int size,
                             @RequestParam(value = "departmentId", required = false) Long departmentId,
-                            Model model) {
+                            @RequestParam(value = "keyword", required = false) String keyword,
+                            Model model, HttpServletResponse response) {
         if (page < 1) {
             page = 1;
         } else {
             page -= 1; // zero-based index
         }
+        Cookie myCookie = new Cookie("msg", "Hello");
+        int total = Integer.parseInt(counter) + 1;
+        Cookie counterViewPage = new Cookie("counter", total + "");
+        myCookie.setMaxAge(60);
+        counterViewPage.setMaxAge(60);
+        response.addCookie(myCookie);
+        response.addCookie(counterViewPage);
 
         ListUserResponse listUserResponse;
         if (departmentId != null) {
@@ -51,13 +65,25 @@ public class UserController {
             // Lấy tất cả user
             listUserResponse = userService.getAllUsers(page, size);
         }
-
+        if (keyword != null && !keyword.isEmpty()) {
+            // Tìm kiếm theo keyword
+            listUserResponse = userService.searchUsers(keyword, page, size);
+        } else if (departmentId != null) {
+            // Lọc theo department
+            listUserResponse = userService.getUsersByDepartment(departmentId, page, size);
+        } else {
+            // Tất cả user
+            listUserResponse = userService.getAllUsers(page, size);
+        }
+        String username = (String) httpSession.getAttribute("username");
         model.addAttribute("users", listUserResponse.getUsers());
         model.addAttribute("totalPages", listUserResponse.getTotalPage());
         model.addAttribute("currentPage", listUserResponse.getCurrentPage());
 
         model.addAttribute("departments", departmentService.getAllDepartments());
         model.addAttribute("selectedDepartmentId", departmentId);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("totalViewPage", counter);
 
         return "users/list";
     }
@@ -66,14 +92,14 @@ public class UserController {
 
     @GetMapping("/create")
     public String createUser(Model model) {
-        CreateUserDTO createUserDTO = new CreateUserDTO();
-        List<DepartmentDTO> departments = departmentService.getAllDepartments();
+        if(!model.containsAttribute("user")){
+            model.addAttribute("user", new CreateUserDTO());
+        }
 
-        model.addAttribute("departments", departments);
+        model.addAttribute("departments", departmentService.getAllDepartments());
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", createUserDTO);
-        // Logic to create a new user
-        return "users/create"; // This will resolve to /WEB-INF/views/users/create.html
+
+        return "users/create";
     }
 
     @GetMapping("/{id}/detail")
@@ -94,15 +120,12 @@ public class UserController {
         return "redirect:/users";
     }
 //
-    @PostMapping("/store")
+    @PostMapping("/create")
     public String storeUser(@Validated @ModelAttribute("user") CreateUserDTO
                                         createUserDTO, BindingResult result, Model model) throws IOException {
         if(result.hasErrors()){
-            List<DepartmentDTO> departments = departmentService.getAllDepartments();
-
-            // Add the EditUserDTO to the model
-
-            model.addAttribute("departments", departments);
+            model.addAttribute("departments", departmentService.getAllDepartments());
+            model.addAttribute("roles", roleService.getAllRoles());
             return "users/create";
         }
         // Logic to store a new user
@@ -140,7 +163,13 @@ public String showFormEdit(@PathVariable("id") Long id, Model model) {
 //
     @PostMapping("/{id}/update")
     public String updateUser(@PathVariable("id") Long id,
-                             @ModelAttribute("user") EditUserDTO editUserDTO) throws IOException {
+                             @Validated @ModelAttribute("user") EditUserDTO editUserDTO,
+                             BindingResult result, Model model) throws IOException {
+        if(result.hasErrors()){
+            model.addAttribute("departments", departmentService.getAllDepartments());
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "users/edit"; // hiển thị lại form với lỗi
+        }
         UserDTO user = userService.getUserById(id);
         if (user == null) {
             return "redirect:/users"; // Redirect if user not found
