@@ -33,7 +33,7 @@
                     <h4 class="mb-0">Create New User</h4>
                 </div>
                 <div class="card-body">
-                    <form th:object="${user}" th:action="@{/users/create}" method="post" enctype="multipart/form-data">
+                    <form th:object="${user}" th:action="@{/admin/users/create}" method="post" enctype="multipart/form-data">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="username" class="form-label">Username</label>

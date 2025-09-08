@@ -5,6 +5,7 @@ import com.codegym.demo.dto.DepartmentDTO;
 import com.codegym.demo.dto.EditUserDTO;
 import com.codegym.demo.dto.UserDTO;
 import com.codegym.demo.dto.response.ListUserResponse;
+import com.codegym.demo.dto.response.ListUserSearchResponse;
 import com.codegym.demo.models.User;
 import com.codegym.demo.services.DepartmentService;
 import com.codegym.demo.services.RoleService;
@@ -13,6 +14,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,18 +28,22 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UserController {
     private final UserService userService;
     private final DepartmentService departmentService;
     private final RoleService roleService;
     private final HttpSession httpSession;
 
-    public UserController(UserService userService, DepartmentService departmentService, RoleService roleService, HttpSession httpSession) {
+    public UserController(UserService userService,
+                          DepartmentService departmentService,
+                          HttpSession httpSession,
+                          RoleService roleService) {
         this.userService = userService;
         this.departmentService = departmentService;
         this.roleService = roleService;
         this.httpSession = httpSession;
+
     }
 
     @GetMapping
@@ -56,6 +65,10 @@ public class UserController {
         counterViewPage.setMaxAge(60);
         response.addCookie(myCookie);
         response.addCookie(counterViewPage);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        httpSession.setAttribute("email", email);
 
         ListUserResponse listUserResponse;
         if (departmentId != null) {
@@ -176,5 +189,10 @@ public String showFormEdit(@PathVariable("id") Long id, Model model) {
         }
         userService.updateUser(id, editUserDTO);
         return "redirect:/users";
+    }
+    @GetMapping("/search")
+    public ResponseEntity<ListUserSearchResponse> search(@RequestParam("keyword") String keyword) {
+        ListUserSearchResponse res = userService.searchByName(keyword);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

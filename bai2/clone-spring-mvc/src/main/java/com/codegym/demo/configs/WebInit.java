@@ -8,7 +8,7 @@ public class WebInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{JpaConfig.class}; //No root context configuration
+        return new Class<?>[]{SecurityConfig.class, JpaConfig.class}; //No root context configuration
     }
 
     @Override

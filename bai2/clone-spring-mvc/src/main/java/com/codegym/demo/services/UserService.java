@@ -4,6 +4,7 @@ import com.codegym.demo.dto.CreateUserDTO;
 import com.codegym.demo.dto.EditUserDTO;
 import com.codegym.demo.dto.UserDTO;
 import com.codegym.demo.dto.response.ListUserResponse;
+import com.codegym.demo.dto.response.ListUserSearchResponse;
 import com.codegym.demo.models.Department;
 import com.codegym.demo.models.Role;
 import com.codegym.demo.models.User;
@@ -229,5 +230,27 @@ public class UserService {
         response.setUsers(userDTOs);
 
         return response;
+    }
+    public ListUserSearchResponse searchByName(String name) {
+        List<User> data = userRepository.findUserByNameContaining(name);
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for (User user : data) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUsername(user.getName());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhone(user.getPhone());
+            userDTO.setImageUrl(user.getImageUrl());
+
+            String nameDepartment = user.getDepartment() != null ? user.getDepartment().getName() : "No Department";
+            userDTO.setDepartmentName(nameDepartment);
+
+            userDTOList.add(userDTO);
+        }
+
+        ListUserSearchResponse listUserSearchResponse = new ListUserSearchResponse();
+        listUserSearchResponse.setUsers(userDTOList);
+
+        return listUserSearchResponse;
     }
 }
