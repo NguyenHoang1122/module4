@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 <head>
     <title th:text="#{userList}"></title>
@@ -82,12 +83,12 @@
     <div class="card p-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 th:text="#{userList}"></h3>
-            <a class="btn btn-success" href="/admin/users/create" th:text="#{createUser}"></a>
+            <a sec:authorize="hasRole('ADMIN')" class="btn btn-success" href="/admin/users/create" th:text="#{createUser}"></a>
         </div>
 
         <!-- Filter & Search -->
         <div class="d-flex filter-search">
-            <form th:action="@{/users}" method="get" class="flex-grow-1 me-2">
+            <form th:action="@{/admin/users}" method="get" class="flex-grow-1 me-2">
                 <select name="departmentId" class="form-select" onchange="this.form.submit()">
                     <option value="">All Departments</option>
                     <option th:each="dept : ${departments}"
@@ -96,7 +97,7 @@
                             th:selected="${selectedDepartmentId == dept.id}"></option>
                 </select>
             </form>
-            <form th:action="@{/users}" method="get" class="d-flex flex-grow-2">
+            <form th:action="@{/admin/users}" method="get" class="d-flex flex-grow-2">
                 <input type="text" name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Search by username or email">
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
@@ -114,7 +115,7 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Role</th>
-                    <th>Actions</th>
+                    <th sec:authorize="hasRole('ADMIN')" scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody id="list-user">
@@ -133,19 +134,13 @@
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.phone}"></td>
                     <td th:text="${user.departmentName}"></td>
-                    <td th:text="${user.roleName}"></td>
-                    <td class="d-flex gap-2">
+<!--                    chuỗi danh sach roles-->
+                    <td th:text="${#strings.listJoin(user.roleNames, ', ' )}"></td>
+
+                    <td sec:authorize="hasRole('ADMIN')"  class="d-flex gap-2">
                         <a class="btn btn-info btn-sm" th:href="@{/admin/users/{id}/detail(id=${user.id})}">Detail</a>
                         <a class="btn btn-danger" onclick="return confirm('Are you sure')" th:href="@{/admin/users/{id}/delete(id=${user.getId()})}" th:text="#{delete}"></a>
                         <a class="btn btn-primary" th:href="@{/admin/users/{id}/edit(id=${user.getId()})}" th:text="#{edit}">Edit</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger" onclick="return confirm('Are you sure')" th:href="@{/admin/users/{id}/delete(id=${user.getId()})}">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                        <a class="btn btn-primary" th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
                     </td>
                 </tr>
                 </tbody>
@@ -156,13 +151,13 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center mt-3">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/users(page=${currentPage}, size=5, departmentId=${selectedDepartmentId})}">Previous</a>
+                    <a class="page-link" th:href="@{/admin/users(page=${currentPage}, size=5, departmentId=${selectedDepartmentId})}">Previous</a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage + 1 == i} ? 'active'">
-                    <a class="page-link" th:href="@{/users(page=${i}, size=5, departmentId=${selectedDepartmentId})}" th:text="${i}"></a>
+                    <a class="page-link" th:href="@{/admin/users(page=${i}, size=5, departmentId=${selectedDepartmentId})}" th:text="${i}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
-                    <a class="page-link" th:href="@{/users(page=${currentPage + 2}, size=5, departmentId=${selectedDepartmentId})}">Next</a>
+                    <a class="page-link" th:href="@{/admin/users(page=${currentPage + 2}, size=5, departmentId=${selectedDepartmentId})}">Next</a>
                 </li>
             </ul>
         </nav>

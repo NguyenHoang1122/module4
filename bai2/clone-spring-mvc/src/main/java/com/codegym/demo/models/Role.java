@@ -15,8 +15,8 @@ public class Role {
 
     private String name;
 
-    // 1 role - n users
-    @OneToMany(mappedBy = "role")
+    // n role - n users
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
     public Role() {

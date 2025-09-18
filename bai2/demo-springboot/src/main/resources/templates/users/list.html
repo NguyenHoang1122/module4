@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{userList}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .table img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+        .filter-search {
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 50px;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            display: block;
+            margin: auto;
+            max-width: 50%;       /* Hiển thị 200% khi zoom */
+            max-height: 80%;
+            border-radius: 10px;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+            object-fit: contain;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(0.5);
+        }
+
+        .close-modal-image-show {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-modal-image-show:hover {
+            color: #bbb;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.7); }
+            to { transform: scale(1); }
+        }
+        #myModal {
+            z-index: 9999 !important;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container py-5">
+    <div class="card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 th:text="#{userList}"></h3>
+            <a sec:authorize="hasRole('ADMIN')" class="btn btn-success" href="/admin/users/create" th:text="#{createUser}"></a>
+        </div>
+
+        <!-- Filter & Search -->
+        <div class="d-flex filter-search">
+            <form th:action="@{/admin/users}" method="get" class="flex-grow-1 me-2">
+                <select name="departmentId" class="form-select" onchange="this.form.submit()">
+                    <option value="">All Departments</option>
+                    <option th:each="dept : ${departments}"
+                            th:value="${dept.id}"
+                            th:text="${dept.name}"
+                            th:selected="${selectedDepartmentId == dept.id}"></option>
+                </select>
+            </form>
+            <form th:action="@{/admin/users}" method="get" class="d-flex flex-grow-2">
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Search by username or email">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th sec:authorize="hasRole('ADMIN')" scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="list-user">
+                <tr th:each="user, userStat : ${users}">
+                    <td th:text="${userStat.index + 1 + (currentPage * 5)}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td>
+                        <img th:if="${user.imageUrl != null}"
+                             class="image-user"
+                             th:src="@{/uploads/{url}(url=${user.imageUrl})}"
+                             width="50" height="50"
+                             alt="User Image"
+                             style="cursor:pointer; border-radius: 5px;">
+                        <span th:if="${user.imageUrl == null}">N/A</span>
+                    </td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phone}"></td>
+                    <td th:text="${user.departmentName}"></td>
+<!--                    chuỗi danh sach roles-->
+                    <td th:text="${#strings.listJoin(user.roleNames, ', ' )}"></td>
+
+                    <td sec:authorize="hasRole('ADMIN')"  class="d-flex gap-2">
+                        <a class="btn btn-info btn-sm" th:href="@{/admin/users/{id}/detail(id=${user.id})}">Detail</a>
+                        <a class="btn btn-danger" onclick="return confirm('Are you sure')" th:href="@{/admin/users/{id}/delete(id=${user.getId()})}" th:text="#{delete}"></a>
+                        <a class="btn btn-primary" th:href="@{/admin/users/{id}/edit(id=${user.getId()})}" th:text="#{edit}">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center mt-3">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/users(page=${currentPage}, size=5, departmentId=${selectedDepartmentId})}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage + 1 == i} ? 'active'">
+                    <a class="page-link" th:href="@{/admin/users(page=${i}, size=5, departmentId=${selectedDepartmentId})}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/users(page=${currentPage + 2}, size=5, departmentId=${selectedDepartmentId})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close-modal-image-show">&times;</span>
+        <img class="modal-content" id="image-show" alt="Preview">
+    </div>
+</section>
+</body>
+</html>

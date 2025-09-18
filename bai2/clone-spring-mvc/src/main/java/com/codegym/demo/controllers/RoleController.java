@@ -33,7 +33,7 @@ public class RoleController {
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         RoleDTO role = roleService.getById(id);
-        if (role == null) return "redirect:/roles";
+        if (role == null) return "redirect:/admin/roles";
         model.addAttribute("role", role);
         return "role/edit";
     }
@@ -41,19 +41,19 @@ public class RoleController {
     @PostMapping("/store")
     public String storeRole(@ModelAttribute("role") RoleDTO roleDTO) {
         roleService.createRole(roleDTO);
-        return "redirect:/roles";
+        return "redirect:/admin/roles";
     }
 
 
     @PostMapping("/{id}/update")
     public String updateRole(@PathVariable("id") Long id, @ModelAttribute("role") RoleDTO roleDTO) {
         roleService.updateRole(id, roleDTO);
-        return "redirect:/roles";
+        return "redirect:/admin/roles";
     }
 
     @GetMapping("/{id}/delete")
     public String deleteRole(@PathVariable("id") Long id) {
         roleService.deleteRole(id);
-        return "redirect:/roles";
+        return "redirect:/admin/roles";
     }
 }

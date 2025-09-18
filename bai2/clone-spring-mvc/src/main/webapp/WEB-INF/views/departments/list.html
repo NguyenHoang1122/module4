@@ -21,7 +21,7 @@
         </div>
 
         <div class="d-flex filter-search">
-            <form th:action="@{/department}" method="get" class="flex-grow-1 me-2">
+            <form th:action="@{/admin/department}" method="get" class="flex-grow-1 me-2">
                 <input type="text" name="keyword" class="form-control" placeholder="Search by department name" th:value="${keyword}">
             </form>
             <button class="btn btn-primary" onclick="this.closest('form').submit()">Search</button>
@@ -41,8 +41,8 @@
                     <td th:text="${dept.id}"></td>
                     <td th:text="${dept.name}"></td>
                     <td>
-                        <a class="btn btn-warning btn-sm" th:href="@{/department/{id}/edit(id=${dept.id})}">Edit</a>
-                        <a class="btn btn-danger btn-sm" th:href="@{/department/delete/{id}(id=${dept.id})}" onclick="return confirm('Delete this department?')">Delete</a>
+                        <a class="btn btn-warning btn-sm" th:href="@{/admin/department/{id}/edit(id=${dept.id})}">Edit</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/admin/department/delete/{id}(id=${dept.id})}" onclick="return confirm('Delete this department?')">Delete</a>
                     </td>
                 </tr>
                 </tbody>

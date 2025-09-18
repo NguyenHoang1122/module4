@@ -1,9 +1,6 @@
 package com.codegym.demo.controllers;
 
-import com.codegym.demo.dto.CreateUserDTO;
-import com.codegym.demo.dto.DepartmentDTO;
-import com.codegym.demo.dto.EditUserDTO;
-import com.codegym.demo.dto.UserDTO;
+import com.codegym.demo.dto.*;
 import com.codegym.demo.dto.response.ListUserResponse;
 import com.codegym.demo.dto.response.ListUserSearchResponse;
 import com.codegym.demo.models.User;
@@ -130,27 +127,29 @@ public class UserController {
         // Logic to delete a user by ID
         userService.deleteById(id);
 
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 //
     @PostMapping("/create")
     public String storeUser(@Validated @ModelAttribute("user") CreateUserDTO
                                         createUserDTO, BindingResult result, Model model) throws IOException {
         if(result.hasErrors()){
-            model.addAttribute("departments", departmentService.getAllDepartments());
-            model.addAttribute("roles", roleService.getAllRoles());
+            List<DepartmentDTO> departments = departmentService.getAllDepartments();
+            List<RoleDTO> roles = roleService.getAllRoles();
+            model.addAttribute("departments", departments);
+            model.addAttribute("roles", roles);
             return "users/create";
         }
         // Logic to store a new user
         userService.storeUser(createUserDTO);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 //
 @GetMapping("/{id}/edit")
 public String showFormEdit(@PathVariable("id") Long id, Model model) {
     UserDTO user = userService.getUserById(id);
     if (user == null) {
-        return "redirect:/users"; // Redirect if user not found
+        return "redirect:admin/users"; // Redirect if user not found
     }
 
     // Prepare the EditUserDTO with the user's current details
@@ -161,7 +160,6 @@ public String showFormEdit(@PathVariable("id") Long id, Model model) {
             user.getPhone()
     );
     editUserDTO.setDepartmentId(user.getDepartmentId());
-    editUserDTO.setRoleId(user.getRoleId());
 
     List<DepartmentDTO> departments = departmentService.getAllDepartments();
 
@@ -185,10 +183,10 @@ public String showFormEdit(@PathVariable("id") Long id, Model model) {
         }
         UserDTO user = userService.getUserById(id);
         if (user == null) {
-            return "redirect:/users"; // Redirect if user not found
+            return "redirect:/admin/users"; // Redirect if user not found
         }
         userService.updateUser(id, editUserDTO);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
     @GetMapping("/search")
     public ResponseEntity<ListUserSearchResponse> search(@RequestParam("keyword") String keyword) {

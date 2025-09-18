@@ -5,6 +5,7 @@ import com.codegym.demo.dto.EditUserDTO;
 import com.codegym.demo.dto.UserDTO;
 import com.codegym.demo.dto.response.ListUserResponse;
 import com.codegym.demo.dto.response.ListUserSearchResponse;
+import com.codegym.demo.mappers.CreateUserMapper;
 import com.codegym.demo.models.Department;
 import com.codegym.demo.models.Role;
 import com.codegym.demo.models.User;
@@ -16,11 +17,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -29,15 +33,19 @@ public class UserService {
     private final IDepartmentRepository departmentRepository;
     private final IRoleRepository roleRepository;
     private final FileManager fileManager;
+    private final PasswordEncoder passwordEncoder;
+    private final CreateUserMapper createUserMapper;
 
     public UserService(IUserRepository userRepository,
                        IDepartmentRepository departmentRepository,
                        IRoleRepository roleRepository,
-                       FileManager fileManager) {
+                       FileManager fileManager,PasswordEncoder passwordEncoder, CreateUserMapper createUserMapper) {
         this.userRepository = userRepository;
         this.departmentRepository = departmentRepository;
         this.roleRepository = roleRepository;
         this.fileManager = fileManager;
+        this.passwordEncoder = passwordEncoder;
+        this.createUserMapper = createUserMapper;
     }
 
     // ✅ Validation ảnh
@@ -55,18 +63,25 @@ public class UserService {
     public ListUserResponse getAllUsers(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
         Page<User> data = userRepository.findAll(pageable);
-
+        List<User> users = data.getContent();
         List<UserDTO> userDTOs = new ArrayList<>();
-        for (User user : data.getContent()) {
-            UserDTO dto = new UserDTO();
-            dto.setId(user.getId());
-            dto.setUsername(user.getName());
-            dto.setEmail(user.getEmail());
-            dto.setPhone(user.getPhone());
-            dto.setImageUrl(user.getImageUrl());
-            dto.setDepartmentName(user.getDepartment() != null ? user.getDepartment().getName() : "No Department");
-            dto.setRoleName(user.getRole() != null ? user.getRole().getName() : "No Role");
-            userDTOs.add(dto);
+
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUsername(user.getName());
+            userDTO.setImageUrl(user.getImageUrl());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhone(user.getPhone());
+            userDTO.setDepartmentName(user.getDepartment().getName());
+
+            List<String> nameRoles = new ArrayList<>();
+            for (Role role : user.getRoles()) {
+                nameRoles.add(role.getName());
+            }
+
+            userDTO.setRoleNames(nameRoles);
+            userDTOs.add(userDTO);
         }
 
         ListUserResponse response = new ListUserResponse();
@@ -88,23 +103,23 @@ public class UserService {
     }
 
     // ✅ Thêm mới user
+    @Transactional
     public void storeUser(CreateUserDTO dto) throws IOException {
         User newUser = new User();
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
         newUser.setName(dto.getUsername());
         newUser.setEmail(dto.getEmail());
-        newUser.setPassword(dto.getPassword());
+        newUser.setPassword(dto.getPassword()); // TODO: encode password
         newUser.setPhone(dto.getPhone());
-
-        // Role
-        if (dto.getRoleId() != null) {
-            roleRepository.findById(dto.getRoleId()).ifPresent(newUser::setRole);
+        // Roles
+        if (dto.getRoleIds() != null && !dto.getRoleIds().isEmpty()) {
+            Set<Role> roles = new HashSet<>(roleRepository.findAllById(dto.getRoleIds()));
+            newUser.setRoles(roles);
         }
-
         // Department
         if (dto.getDepartmentId() != null) {
             departmentRepository.findById(dto.getDepartmentId()).ifPresent(newUser::setDepartment);
         }
-
         // Image
         MultipartFile file = dto.getImage();
         if (file != null && !file.isEmpty()) {
@@ -114,23 +129,12 @@ public class UserService {
             String fileName = fileManager.uploadFile(UPLOAD_DIR, file);
             newUser.setImageUrl(fileName);
         }
-
         userRepository.save(newUser);
     }
 
     // ✅ Lấy user theo ID
     public UserDTO getUserById(Long id) {
-        return userRepository.findById(id).map(u -> {
-            UserDTO dto = new UserDTO();
-            dto.setId(u.getId());
-            dto.setUsername(u.getName());
-            dto.setEmail(u.getEmail());
-            dto.setPhone(u.getPhone());
-            dto.setImageUrl(u.getImageUrl());
-            dto.setDepartmentId(u.getDepartment() != null ? u.getDepartment().getId() : null);
-            dto.setRoleId(u.getRole() != null ? u.getRole().getId() : null);
-            return dto;
-        }).orElse(null);
+        return userRepository.findById(id).map(this::mapToDTO).orElse(null);
     }
 
     // ✅ Cập nhật user
@@ -147,9 +151,10 @@ public class UserService {
             departmentRepository.findById(dto.getDepartmentId()).ifPresent(user::setDepartment);
         }
 
-        // Role
-        if (dto.getRoleId() != null) {
-            roleRepository.findById(dto.getRoleId()).ifPresent(user::setRole);
+        // Roles
+        if (dto.getRoleIds() != null && !dto.getRoleIds().isEmpty()) {
+            Set<Role> roles = new HashSet<>(roleRepository.findAllById(dto.getRoleIds()));
+            user.setRoles(roles);
         }
 
         // Image
@@ -165,7 +170,6 @@ public class UserService {
             String fileName = fileManager.uploadFile(UPLOAD_DIR, file);
             user.setImageUrl(fileName);
         }
-        // Nếu file rỗng, giữ nguyên ảnh cũ
 
         userRepository.save(user);
     }
@@ -181,18 +185,7 @@ public class UserService {
             data = userRepository.findByDepartmentId(departmentId, pageable);
         }
 
-        List<UserDTO> userDTOs = new ArrayList<>();
-        for (User user : data.getContent()) {
-            UserDTO dto = new UserDTO();
-            dto.setId(user.getId());
-            dto.setUsername(user.getName());
-            dto.setEmail(user.getEmail());
-            dto.setPhone(user.getPhone());
-            dto.setImageUrl(user.getImageUrl());
-            dto.setDepartmentName(user.getDepartment() != null ? user.getDepartment().getName() : "No Department");
-            dto.setRoleName(user.getRole() != null ? user.getRole().getName() : "No Role");
-            userDTOs.add(dto);
-        }
+        List<UserDTO> userDTOs = data.getContent().stream().map(this::mapToDTO).toList();
 
         ListUserResponse response = new ListUserResponse();
         response.setTotalPage(data.getTotalPages());
@@ -201,6 +194,8 @@ public class UserService {
 
         return response;
     }
+
+    // ✅ Search users (name/email)
     public ListUserResponse searchUsers(String keyword, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("id").ascending());
 
@@ -211,18 +206,7 @@ public class UserService {
             data = userRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(keyword, keyword, pageable);
         }
 
-        List<UserDTO> userDTOs = new ArrayList<>();
-        for (User user : data.getContent()) {
-            UserDTO dto = new UserDTO();
-            dto.setId(user.getId());
-            dto.setUsername(user.getName());
-            dto.setEmail(user.getEmail());
-            dto.setPhone(user.getPhone());
-            dto.setImageUrl(user.getImageUrl());
-            dto.setDepartmentName(user.getDepartment() != null ? user.getDepartment().getName() : "No Department");
-            dto.setRoleName(user.getRole() != null ? user.getRole().getName() : "No Role");
-            userDTOs.add(dto);
-        }
+        List<UserDTO> userDTOs = data.getContent().stream().map(this::mapToDTO).toList();
 
         ListUserResponse response = new ListUserResponse();
         response.setTotalPage(data.getTotalPages());
@@ -231,26 +215,41 @@ public class UserService {
 
         return response;
     }
+
+    // ✅ Search by name (not pageable)
     public ListUserSearchResponse searchByName(String name) {
         List<User> data = userRepository.findUserByNameContaining(name);
-        List<UserDTO> userDTOList = new ArrayList<>();
-        for (User user : data) {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setUsername(user.getName());
-            userDTO.setEmail(user.getEmail());
-            userDTO.setPhone(user.getPhone());
-            userDTO.setImageUrl(user.getImageUrl());
-
-            String nameDepartment = user.getDepartment() != null ? user.getDepartment().getName() : "No Department";
-            userDTO.setDepartmentName(nameDepartment);
-
-            userDTOList.add(userDTO);
-        }
+        List<UserDTO> userDTOList = data.stream().map(this::mapToDTO).toList();
 
         ListUserSearchResponse listUserSearchResponse = new ListUserSearchResponse();
         listUserSearchResponse.setUsers(userDTOList);
 
         return listUserSearchResponse;
+    }
+
+    // ✅ Mapping User -> UserDTO
+    private UserDTO mapToDTO(User user) {
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setPhone(user.getPhone());
+        dto.setImageUrl(user.getImageUrl());
+
+        if (user.getDepartment() != null) {
+            dto.setDepartmentId(user.getDepartment().getId());
+            dto.setDepartmentName(user.getDepartment().getName());
+        } else {
+            dto.setDepartmentName("No Department");
+        }
+
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+            dto.setRoleIds(user.getRoles().stream().map(Role::getId).collect(Collectors.toList()));
+            dto.setRoleNames(user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
+        } else {
+            dto.setRoleNames(List.of("No Role"));
+        }
+
+        return dto;
     }
 }

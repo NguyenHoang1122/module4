@@ -20,7 +20,7 @@ public class DepartmentController {
     @GetMapping("")
     public String listDepartments(Model model) {
         model.addAttribute("departments", departmentService.getAllDepartments());
-        return "departments/list";
+        return "/admin/departments/list";
     }
 
     // Hiển thị form create
@@ -34,7 +34,7 @@ public class DepartmentController {
     @PostMapping("/store")
     public String storeDepartment(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.addDepartment(departmentDTO);
-        return "redirect:/department";
+        return "redirect:/admin/department";
     }
 
     // Hiển thị form edit
@@ -48,13 +48,13 @@ public class DepartmentController {
     @PostMapping("/{id}/update")
     public String updateDepartment(@ModelAttribute("department") DepartmentDTO departmentDTO) {
         departmentService.updateDepartment(departmentDTO);
-        return "redirect:/department";
+        return "redirect:/admin/department";
     }
 
     // Xóa
     @GetMapping("/delete/{id}")
     public String deleteDepartment(@PathVariable Long id) {
         departmentService.deleteDepartmentById(id);
-        return "redirect:/department";
+        return "redirect:/admin/department";
     }
 }

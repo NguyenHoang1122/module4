@@ -4,6 +4,8 @@ import com.codegym.demo.validations.custom.Image;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public class EditUserDTO {
     private Long id;
 
@@ -23,7 +25,10 @@ public class EditUserDTO {
     private MultipartFile image;
 
     private Long departmentId;
-    private Long roleId;
+
+    // 👇 đổi từ 1 roleId thành nhiều roleIds
+    @NotEmpty
+    private List<Long> roleIds;
 
     public EditUserDTO() {
     }
@@ -54,6 +59,6 @@ public class EditUserDTO {
     public Long getDepartmentId() { return departmentId; }
     public void setDepartmentId(Long departmentId) { this.departmentId = departmentId; }
 
-    public Long getRoleId() { return roleId; }
-    public void setRoleId(Long roleId) { this.roleId = roleId; }
+    public List<Long> getRoleIds() { return roleIds; }
+    public void setRoleIds(List<Long> roleIds) { this.roleIds = roleIds; }
 }

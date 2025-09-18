@@ -55,12 +55,20 @@
                                     <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label for="roles" class="form-label">Role</label>
-                                <select class="form-select" th:field="*{roleId}" id="roles">
-                                    <option value="" selected>Choose a role</option>
-                                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
-                                </select>
+<!--                            <div class="col-md-6">-->
+<!--                                <label for="roles" class="form-label">Role</label>-->
+<!--                                <select class="form-select" th:field="*{roleIds}" id="roles">-->
+<!--                                    <option value="" selected>Choose a role</option>-->
+<!--                                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+                            <div class="mb-3">
+                                <label  class="form-label">Role</label>
+                                <div th:each="role : ${roles}" class="form-check">
+                                    <input class="form-check-input" name="role_id" type="checkbox" th:value="${role.id}" th:id="${role.id}">
+                                    <label class="form-check-label" th:for="${role.id}" th:text="${role.name}">
+                                    </label>
+                                </div>
                             </div>
                         </div>
 

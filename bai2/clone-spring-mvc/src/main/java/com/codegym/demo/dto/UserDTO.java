@@ -1,5 +1,7 @@
 package com.codegym.demo.dto;
 
+import java.util.List;
+
 public class UserDTO {
     private Long id;
     private String username;
@@ -9,8 +11,10 @@ public class UserDTO {
     private String imageUrl;
     private String departmentName;
     private Long departmentId;
-    private Long roleId;
-    private String roleName;
+
+    // ✅ thay vì chỉ 1 role -> nhiều role
+    private List<Long> roleIds;
+    private List<String> roleNames;
 
     public UserDTO() {
     }
@@ -30,6 +34,7 @@ public class UserDTO {
         this.phone = phone;
     }
 
+    // ===== Getter / Setter =====
     public Long getId() {
         return id;
     }
@@ -70,12 +75,12 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getDepartmentName() {
@@ -94,19 +99,19 @@ public class UserDTO {
         this.departmentId = departmentId;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public List<Long> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRoleIds(List<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public List<String> getRoleNames() {
+        return roleNames;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRoleNames(List<String> roleNames) {
+        this.roleNames = roleNames;
     }
 }

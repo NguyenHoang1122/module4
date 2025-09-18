@@ -14,13 +14,13 @@
 <section layout:fragment="content" class="container py-5">
     <div class="card p-4">
         <h2>Create Role</h2>
-        <form th:action="@{/roles/store}" th:object="${role}" method="post" class="mt-3">
+        <form th:action="@{/admin/roles/store}" th:object="${role}" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">Role Name</label>
                 <input type="text" th:field="*{name}" class="form-control" placeholder="Enter role name">
             </div>
             <button type="submit" class="btn btn-success">Create</button>
-            <a th:href="@{/roles}" class="btn btn-secondary">Cancel</a>
+            <a th:href="@{/admin/roles}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </section>

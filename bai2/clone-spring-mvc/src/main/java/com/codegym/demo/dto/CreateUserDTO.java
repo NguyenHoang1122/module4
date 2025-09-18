@@ -4,6 +4,8 @@ import com.codegym.demo.validations.custom.Image;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public class CreateUserDTO {
     @NotBlank(message = "Username không được để trống")
     @Size(min = 6, max = 50, message = "Username từ 6 - 50 kí tự")
@@ -25,7 +27,10 @@ public class CreateUserDTO {
     private MultipartFile image;
 
     private Long departmentId;
-    private Long roleId;
+
+    // 👇 Đổi từ 1 roleId thành nhiều roleIds
+    @NotEmpty(message = "Role Khong duoc de trong")
+    private List<Long> roleIds;
 
     public CreateUserDTO() {
     }
@@ -37,7 +42,7 @@ public class CreateUserDTO {
         this.phone = phone;
     }
 
-    // getter setter ...
+    // getter setter
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
@@ -56,6 +61,11 @@ public class CreateUserDTO {
     public Long getDepartmentId() { return departmentId; }
     public void setDepartmentId(Long departmentId) { this.departmentId = departmentId; }
 
-    public Long getRoleId() { return roleId; }
-    public void setRoleId(Long roleId) { this.roleId = roleId; }
+    public @NotEmpty(message = "Phải chọn ít nhất 1 role") List<Long> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(@NotEmpty(message = "Phải chọn ít nhất 1 role") List<Long> roleIds) {
+        this.roleIds = roleIds;
+    }
 }
