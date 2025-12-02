@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>CreateCustomer</title>
+</head>
+<body>
+<div class="container mt-4">
+    <p>
+        <a th:href="@{/customers}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-alt-circle-left"></i> Back to customer list
+        </a>
+    </p>
+
+    <div class="notify mt-3">
+        <div th:if="${message}">
+            <span class="alert alert-success d-block" th:text="${message}"></span>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-header bg-primary text-white">
+            <h5>New Customer Information</h5>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/customers/create}" th:object="${customer}"
+                  method="POST" novalidate="novalidate">
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Firstname</label>
+                    <input type="text" id="firstName" th:field="*{firstName}" class="form-control" placeholder="Enter first name"/>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Lastname</label>
+                    <input type="email" id="lastName" th:field="*{lastName}" class="form-control" placeholder="Enter last name"/>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <a th:href="@{/customers}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

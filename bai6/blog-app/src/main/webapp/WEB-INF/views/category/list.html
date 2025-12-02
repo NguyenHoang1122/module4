@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Categories</title>
+</head>
+<body>
+<h1>Category List</h1>
+<a th:href="@{/categories/create}">Create New Category</a>
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${categories}">
+        <td th:text="${c.id}">1</td>
+        <td th:text="${c.name}">Name</td>
+        <td>
+            <a th:href="@{/categories/{id}/edit(id=${c.id})}">Edit</a> |
+            <a th:href="@{/categories/{id}/delete(id=${c.id})}" onclick="return confirm('Delete this category?');">Delete</a>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(categories)}">
+        <td colspan="3">No categories found.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>ListCustomer</title>
+</head>
+<body>
+<div class="container"> <h3>Customers</h3>
+    <p>
+        <a th:href="@{/customers/create}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add new customer
+        </a>
+    </p>
+
+    <div class="notify">
+        <div th:if="${success}">
+            <span class="alert alert-success" th:text="${success}"></span>
+        </div>
+        <div th:if="${errorMessage}">
+            <span class="alert alert-danger" th:text="${errorMessage}"></span>
+        </div>
+    </div>
+
+    <table id="customers" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row,rowStat : ${customers}">
+            <td th:text="${row.name}"></td>
+            <td th:text="${row.email}"></td>
+            <td th:text="${row.address}"></td>
+            <td>
+                <a th:href="@{/customers/{id}/edit(id=${row.id})}" class="btn btn-warning btn-sm">
+                    Edit
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/customers/{id}/delete(id=${row.id})}" class="btn btn-danger btn-sm">
+                    Delete
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/customers/{id}/view(id=${row.id})}" class="btn btn-info btn-sm">
+                    View
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div> <footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
