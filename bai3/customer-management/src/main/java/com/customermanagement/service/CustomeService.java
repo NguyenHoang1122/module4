@@ -1,10 +1,11 @@
-package com.springmvccustomermanagement.service;
+package com.customermanagement.service;
 
-import com.springmvccustomermanagement.model.Customer;
+import com.customermanagement.model.Customer;
 
 import java.util.List;
 
 public interface CustomeService {
     List<Customer> findAll();
-    Customer findById(int id);
+    Customer findById(Long id);
+    void save(Customer customer);
 }

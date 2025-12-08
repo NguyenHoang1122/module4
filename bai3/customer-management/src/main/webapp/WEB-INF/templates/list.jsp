@@ -7,7 +7,6 @@
   Time: 4:43 CH
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Customers List</title>
@@ -41,8 +40,11 @@
     <c:forEach var="customer" items="${customers}">
         <tr>
         <td><c:out value="${customer.id}"/></td>
-        <td><a href="${pageContext.request.contextPath}/customers/detail?id=${customer.id}">${customer.name}</a></td>
+
+        <td><a href="${pageContext.request.contextPath}/customers/${customer.id}">${customer.name}</a></td>
+
         <td><c:out value="${customer.email}"/></td>
+
         <td><c:out value="${customer.address}"/></td>
         </tr>
     </c:forEach>

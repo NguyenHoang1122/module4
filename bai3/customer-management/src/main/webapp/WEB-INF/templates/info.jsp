@@ -7,7 +7,6 @@
   Time: 4:53 CH
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Customer Detail</title>
@@ -82,26 +81,29 @@
     </style>
 </head>
 <body>
-<div class="customer-info-container">
-    <h2>Customer Information</h2>
-    <p>
-        <strong>ID:</strong>
-        <input type="text" value="<c:out value='${customer.id}'/>" readonly>
-    </p>
-    <p>
-        <strong>Name:</strong>
-        <input type="text" value="<c:out value='${customer.name}'/>">
-    </p>
-    <p>
-        <strong>Email:</strong>
-        <input type="text" value="<c:out value='${customer.email}'/>">
-    </p>
-    <p>
-        <strong>Address:</strong>
-        <input type="text" value="<c:out value='${customer.address}'/>">
-    </p>
-    <button>Update</button>
-</div>
+<form method="post" action="${pageContext.request.contextPath}/customers/update">
+    <div class="customer-info-container">
+        <h2>Customer Information</h2>
+        <p>
+            <strong>Id:</strong>
+            <input type="hidden" name="id" value="<c:out value="${customer.id}"/>">
+            <input type="text" value="<c:out value="${customer.id}"/>" readonly>
+        </p>
+        <p>
+            <strong>Name:</strong>
+            <input type="text" name="name" value="<c:out value="${customer.name}"/>">
+        </p>
+        <p>
+            <strong>Email:</strong>
+            <input type="text" name="email" value="<c:out value="${customer.email}"/>">
+        </p>
+        <p>
+            <strong>Address:</strong>
+            <input type="text" name="address" value="<c:out value="${customer.address}"/>">
+        </p>
+        <button>Update</button>
+    </div>
+</form>
 <p>
     <a href="${pageContext.request.contextPath}/customers">Back to Customers List</a>
 </p>
