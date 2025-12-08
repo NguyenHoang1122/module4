@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Autumn Customer</title>
+
+    <style>
+        /* ======== Autumn Theme Colors ======== */
+        :root {
+            --autumn-orange: #d97b40;
+            --autumn-brown: #8b4513;
+            --autumn-light: #f7e8d0;
+            --autumn-dark: #5a3310;
+            --autumn-hover: #c26a36;
+            --autumn-border: #d2b48c;
+        }
+
+        /* ======== Base ======== */
+        body {
+            background-color: var(--autumn-light);
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;   /* Căn giữa ngang */
+        }
+
+        h3 {
+            background-color: var(--autumn-orange);
+            color: white;
+            padding: 14px 20px;
+            margin: 0;
+            border-bottom: 4px solid var(--autumn-brown);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            letter-spacing: 1px;
+        }
+        h3,
+        .actions,
+        .notify,
+        #customers,
+        #form {
+            width: 80%;            /* Bạn có thể đổi thành 60% hoặc 100% tuỳ ý */
+            max-width: 900px;      /* Giới hạn độ rộng để nhìn đẹp hơn */
+            margin-left: auto;
+            margin-right: auto;    /* Căn giữa */
+        }
+
+        a {
+            color: var(--autumn-dark);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--autumn-hover);
+        }
+
+        /* ======== Table ======== */
+        #customers {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #f4e3c3;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(120, 60, 10, 0.2);
+        }
+
+        #customers th {
+            background-color: var(--autumn-brown);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        #customers td {
+            border: 1px solid var(--autumn-border);
+            padding: 10px 12px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f1d9b5;
+        }
+
+        #customers tr:hover {
+            background-color: #e6c79c;
+            transition: 0.2s;
+        }
+
+        /* ======== Form ======== */
+        #form {
+            width: 520px;
+            background-color: #f4e3c3;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--autumn-dark);
+        }
+
+        input[type=text],
+        input[type=email] {
+            width: 100%;
+            padding: 12px 10px;
+            margin: 8px 0 16px 0;
+            border: 1px solid #c2a57d;
+            border-radius: 6px;
+            background-color: #fff8ee;
+            box-sizing: border-box;
+        }
+
+        input[type=text]:focus,
+        input[type=email]:focus {
+            border-color: var(--autumn-orange);
+            outline: none;
+            background-color: #fff4e3;
+            transition: 0.2s;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: var(--autumn-orange);
+            color: white;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(139, 69, 19, 0.3);
+        }
+
+        input[type=submit]:hover {
+            background-color: var(--autumn-hover);
+            transform: scale(1.02);
+            transition: 0.2s;
+        }
+
+        /* ======== Notify ======== */
+        .notify span {
+            font-size: 15px;
+            color: var(--autumn-dark);
+            font-weight: bold;
+        }
+
+        /* ======== Footer ======== */
+        footer {
+            margin: 20px 0 10px 0;
+            text-align: center;
+            font-style: italic;
+            color: var(--autumn-dark);
+        }
+
+        footer::before {
+            content: "🍁 ";
+        }
+
+        footer::after {
+            content: " 🍂";
+        }
+
+    </style>
+</head>
+
+<body>
+
+<footer th:fragment="footer">
+    &copy; 2025 Autumn – CodeGym
+</footer>
+
+</body>
+</html>

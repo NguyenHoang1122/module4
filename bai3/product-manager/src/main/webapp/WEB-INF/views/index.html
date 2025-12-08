@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>Danh sách sản phẩm</title>
+</head>
+
+<body>
+
+<h3 class="title-autumn">🍂 Danh sách sản phẩm 🍁</h3>
+
+<div class="actions">
+    <a class="btn-autumn" th:href="@{/products/create}">
+        ➕ Thêm mới sản phẩm
+    </a>
+</div>
+
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<form th:action="@{/products}" method="get">
+    <input style="width: 70%; margin-right: 2px" type="text" name="search" th:value="${search}" placeholder="Nhập tên sản phẩm">
+    <button style="width: 25%" type="submit">Tìm kiếm</button>
+</form>
+<table id="products" class="autumn-table">
+    <thead>
+    <tr>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Hãng</th>
+        <th>Sửa</th>
+        <th>Xóa</th>
+        <th>Mô tả</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${products}">
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.price.intValue()}"></td>
+        <td th:text="${item.manufacturer}"></td>
+        <td><a class="action-link edit"
+               th:href="@{/products/{id}/edit(id=${item.id})}">Sửa</a></td>
+
+        <td><a class="action-link delete"
+               th:href="@{/products/{id}/delete(id=${item.id})}">Xóa</a></td>
+
+        <td><a class="action-link view"
+               th:href="@{/products/{id}/view(id=${item.id})}">Thông tin</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<footer th:replace="/layout :: footer"></footer>
+
+</body>
+</html>
