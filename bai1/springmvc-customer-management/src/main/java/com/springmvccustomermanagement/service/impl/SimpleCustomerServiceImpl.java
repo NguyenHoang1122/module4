@@ -1,14 +1,14 @@
 package com.springmvccustomermanagement.service.impl;
 
 import com.springmvccustomermanagement.model.Customer;
-import com.springmvccustomermanagement.service.CustomeService;
+import com.springmvccustomermanagement.service.CustomerService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SimpleCustomerServiceImpl implements CustomeService {
+public class SimpleCustomerServiceImpl implements CustomerService {
 
     private static Map<Integer,Customer> customers;
     static {
