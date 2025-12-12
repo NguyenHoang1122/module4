@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class HibernateSongService implements ISongService {
+
     private static EntityManager entityManager;
     private static SessionFactory sessionFactory;
 
@@ -27,7 +28,6 @@ public class HibernateSongService implements ISongService {
             e.printStackTrace();
         }
     }
-
     @Override
     public List<Song> findAll() {
         String queryStr = "SELECT c FROM Song AS c";
@@ -47,22 +47,22 @@ public class HibernateSongService implements ISongService {
     public void save(Song song) {
         Transaction transaction = null;
         Song origin;
-        if (song.getId() == 0) {
+        if (song.getId() == null) {
             origin = new Song();
         } else {
             origin = findById(song.getId());
         }
         try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
+            transaction = (Transaction) session.beginTransaction();
             origin.setName(song.getName());
             origin.setArtist(song.getArtist());
-            origin.setGenre(song.getGenre());
+            origin.setCategory(song.getCategory());
             origin.setFilePath(song.getFilePath());
             session.saveOrUpdate(origin);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            if(transaction != null) {
+            if (transaction != null) {
                 transaction.rollback();
             }
         }
@@ -70,18 +70,16 @@ public class HibernateSongService implements ISongService {
 
     @Override
     public void remove(Long id) {
+        Transaction transaction = null;
         Song song = findById(id);
-        if (song != null) {
-            Transaction transaction = null;
-            try(Session session = sessionFactory.openSession()) {
-                transaction = session.beginTransaction();
-                session.delete(song);
-                transaction.commit();
-            }catch (Exception e) {
-                e.printStackTrace();
-                if(transaction != null) {
-                    transaction.rollback();
-                }
+        try (Session session = sessionFactory.openSession()) {
+            transaction = (Transaction) session.beginTransaction();
+            session.delete(song);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
             }
         }
     }

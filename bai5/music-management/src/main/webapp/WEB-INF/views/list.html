@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>List Song</title>
 </head>
 <body>
-$END$
+<h3>Songs</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Artist</th>
+        <th>Category</th>
+        <th>FilePath</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="song : ${songs}">
+        <td th:text="${song.getId()}"></td>
+        <td th:text="${song.getName()}"></td>
+        <td th:text="${song.getArtist()}"></td>
+        <td th:text="${song.getCategory()}"></td>
+        <td>
+            <a th:href="${song.filePath}" th:text="${song.filePath}" target="_blank"></a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
