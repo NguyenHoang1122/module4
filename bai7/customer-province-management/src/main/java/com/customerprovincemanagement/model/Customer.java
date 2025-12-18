@@ -8,7 +8,6 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String firstName;
     private String lastName;
 
@@ -17,6 +16,13 @@ public class Customer {
     private Province province;
 
     public Customer() {
+    }
+
+    public Customer(Long id, String firstName, String lastName, Province province) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.province = province;
     }
 
     public Long getId() {

@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layout :: head">
-    <meta charset="UTF-8">
     <title>Create Customer</title>
 </head>
 <body>
 <h3>Add Customer</h3>
 <p>
     <a th:href="@{/customers}">
-        Back to Customer List
+        Back to customer list
     </a>
 </p>
-
-<div id ="from">
-    <form th:action="@{/customers/create}" th:object="${customer}" method="post">
+<div id="form">
+    <form th:action="@{/customers/create}" th:object="${customer}"
+          method="POST" novalidate="novalidate">
         <input type="hidden" th:field="*{id}"/>
         <div>
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter first name"/>
+            <label for="firstname">FirstName</label>
+            <input type="text" id="firstname" th:field="*{firstName}"/>
         </div>
         <div>
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter last name"/>
+            <label for="lastname">LastName</label>
+            <input type="text" id="lastname" th:field="*{lastName}"/>
         </div>
         <div>
-            <label for="province">Province:</label>
+            <label for="province">Province</label>
             <select id="province" th:field="*{province}">
                 <option th:each="p : ${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
             </select>
         </div>
-        <input value="Save" type="submit"/>
+        <input type="submit" value="Save"/>
     </form>
 </div>
 <footer th:replace="/layout :: footer"></footer>

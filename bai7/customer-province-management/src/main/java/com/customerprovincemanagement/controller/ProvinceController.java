@@ -13,68 +13,80 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/provinces")
+@RequestMapping("provinces")
 public class ProvinceController {
-    @Autowired
-    private IProvinceService iProvinceService;
 
     @Autowired
-    private ICustomerService iCustomerService;
+    private IProvinceService provinceService;
+
+    @Autowired
+    private ICustomerService customerService;
 
     @GetMapping
-    public ModelAndView listProvice(){
-        ModelAndView modelAndView = new ModelAndView("/province/list");
-        modelAndView.addObject("provinces",iProvinceService.findAll());
+    public ModelAndView listProvinces(){
+        ModelAndView modelAndView = new ModelAndView("province/list");
+        Iterable<Province> provinces = provinceService.findAll();
+        modelAndView.addObject("provinces", provinces);
         return modelAndView;
-    }
-
-    @GetMapping("/create")
-    public ModelAndView showCreateForm(){
-        ModelAndView modelAndView = new ModelAndView("/province/create");
-        modelAndView.addObject("province",new Province());
-        return modelAndView;
-    }
-
-    @PostMapping("/create")
-    public String create(@ModelAttribute("province") Province province,
-                         RedirectAttributes redirectAttributes){
-    iProvinceService.save(province);
-    redirectAttributes.addFlashAttribute("message","New province created successfully");
-    return "redirect:/provinces";
     }
 
     @GetMapping("/update/{id}")
     public ModelAndView updateForm(@PathVariable("id") Long id) {
-        Optional<Province> province = iProvinceService.findById(id);
-        if (province.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("/province/update");
+        Optional<Province> province = provinceService.findById(id);
+        if(province.isPresent()){
+            ModelAndView modelAndView = new ModelAndView("province/update");
             modelAndView.addObject("province", province.get());
             return modelAndView;
-        } else {
-            return new ModelAndView("/error_404");
+        }else{
+            return new ModelAndView("error-404");
         }
     }
 
     @PostMapping("/update/{id}")
     public String update(@ModelAttribute("province") Province province,
-                         RedirectAttributes redirect) {
-        iProvinceService.save(province);
-        redirect.addFlashAttribute("message", "Update province successfully");
+                                       RedirectAttributes redirectAttributes) {
+        provinceService.save(province);
+        redirectAttributes.addFlashAttribute("message", "Province updated successfully!");
         return "redirect:/provinces";
+    }
+
+    @GetMapping("/create")
+    public ModelAndView createForm() {
+        ModelAndView modelAndView = new ModelAndView("province/create");
+        modelAndView.addObject("province", new Province());
+        return modelAndView;
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute("province") Province province,
+                                       RedirectAttributes redirectAttributes) {
+        provinceService.save(province);
+        redirectAttributes.addFlashAttribute("message", "New province created successfully!");
+        return "redirect:/provinces";
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteProvince(@PathVariable("id") Long id){
+        Optional<Province> province = provinceService.findById(id);
+        if(province.isPresent()){
+            ModelAndView modelAndView = new ModelAndView("province/delete");
+            modelAndView.addObject("province", province.get());
+            return modelAndView;
+        }else{
+            return new ModelAndView("error-404");
+        }
     }
 
     @GetMapping("/view-province/{id}")
     public ModelAndView viewProvince(@PathVariable("id") Long id){
-        Optional<Province> provinceOptional = iProvinceService.findById(id);
-        if(!provinceOptional.isPresent()){
-            return new ModelAndView("/error_404");
+        Optional<Province> province = provinceService.findById(id);
+        if(province.isPresent()){
+            Iterable<Customer> customers = customerService.findAllByProvince(province.get());
+            ModelAndView modelAndView = new ModelAndView("/customer/list");
+            modelAndView.addObject("customers", customers);
+            return modelAndView;
+        }else{
+            return new ModelAndView("error-404");
         }
-
-        Iterable<Customer> customers = iCustomerService.findAllByProvince(provinceOptional.get());
-
-        ModelAndView modelAndView = new ModelAndView("/customer/list");
-        modelAndView.addObject("customers", customers);
-        return modelAndView;
     }
-
 }

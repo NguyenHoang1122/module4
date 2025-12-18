@@ -27,6 +27,7 @@
         <th>STT</th>
         <th>Name</th>
         <th>Update</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -34,6 +35,7 @@
         <td th:text="${pStatus.count}"></td>
         <td><a th:href="@{/provinces/view-province/{id}(id=${p.getId()})}" th:text="${p.getName()}"></a></td>
         <td><a th:href="@{/provinces/update/{id}(id=${p.getId()})}">update</a></td>
+        <td><a th:href="@{/province/delete/{id}(id=${p.getId()})}">Delete</a> </td>
     </tr>
     </tbody>
 </table>
