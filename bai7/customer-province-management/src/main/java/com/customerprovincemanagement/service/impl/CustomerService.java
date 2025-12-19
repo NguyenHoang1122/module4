@@ -4,8 +4,9 @@ import com.customerprovincemanagement.model.Customer;
 import com.customerprovincemanagement.model.Province;
 import com.customerprovincemanagement.repository.ICustomerRepository;
 import com.customerprovincemanagement.service.ICustomerService;
-import com.customerprovincemanagement.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +15,23 @@ import java.util.Optional;
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
+
+
+    @Override
+    public Iterable<Customer> findAllByProvince(Province province) {
+        return customerRepository.findAllByProvince(province);
+    }
+
+    @Override
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Customer> findAllByFirstNameContaining(Pageable pageable, String name) {
+        return customerRepository.findAllByFirstNameContaining(pageable, name);
+    }
+
 
     @Override
     public Iterable<Customer> findAll() {
@@ -33,10 +51,5 @@ public class CustomerService implements ICustomerService {
     @Override
     public void remove(Long id) {
         customerRepository.deleteById(id);
-    }
-
-    @Override
-    public Iterable<Customer> findAllByProvince(Province province) {
-        return customerRepository.findAllByProvince(province);
     }
 }

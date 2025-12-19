@@ -15,6 +15,12 @@
         Provinces
     </a>
 </p>
+<div style="margin-bottom: 10px; margin-left: 110px">
+    <form th:action="@{/customers/search}" method="get">
+        <label><input style="width: 90%" type="text" name="search"></label>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
 <div class="notify">
     <div th:if="${message}">
         <span th:text="${message}"></span>
@@ -43,6 +49,16 @@
     </tr>
     </tbody>
 </table>
+<div style="text-align: center">
+    <a class="btn btn-primary" th:if="${customers.hasPrevious()}"
+       th:href="@{/customers/page(page=${customers.number - 1})}">Previous</a>
+
+    <span th:text="${customers.number + 1}"></span> |
+    <span th:text="${customers.totalPages}"></span>
+
+    <a class="btn btn-primary" th:if="${customers.hasNext()}"
+       th:href="@{/customers/page(page=${customers.number + 1})}">Next</a>
+</div>
 <footer th:replace="/layout :: footer"></footer>
 </body>
 </html>

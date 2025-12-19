@@ -66,14 +66,14 @@ public class ProvinceController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteProvince(@PathVariable("id") Long id){
+    public ModelAndView deleteProvince(@PathVariable("id") Long id) {
         Optional<Province> province = provinceService.findById(id);
-        if(province.isPresent()){
+        if(!province.isPresent()){
+            return new ModelAndView("/error-404");
+        }else {
             ModelAndView modelAndView = new ModelAndView("province/delete");
             modelAndView.addObject("province", province.get());
             return modelAndView;
-        }else{
-            return new ModelAndView("error-404");
         }
     }
 
