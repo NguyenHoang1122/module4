@@ -8,14 +8,6 @@
       <change beforePath="$PROJECT_DIR$/../../bai1/currency-converter/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai1/currency-converter/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../bai6/customer-management-jpa/src/main/java/com/customermanagementjpa/configuration/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai6/customer-management-jpa/src/main/java/com/customermanagementjpa/configuration/AppConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/configuration/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/configuration/AppConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/controller/ProvinceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/controller/ProvinceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/repository/ICustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/repository/ICustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/service/ICustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/service/ICustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/service/impl/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/customerprovincemanagement/service/impl/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/customer/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/customer/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/province/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/province/list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +214,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766027463111</updated>
-      <workItem from="1766027467374" duration="19027000" />
+      <workItem from="1766027467374" duration="20093000" />
     </task>
     <servers />
   </component>
