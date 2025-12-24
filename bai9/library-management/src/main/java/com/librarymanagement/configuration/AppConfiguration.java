@@ -1,4 +1,4 @@
-package com.customermanageexceptionhandler.configuration;
+package com.librarymanagement.configuration;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -30,8 +30,8 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.customermanageexceptionhandler")
-@EnableJpaRepositories(basePackages = "com.customermanageexceptionhandler.repository")
+@ComponentScan(basePackages = "com.librarymanagement")
+@EnableJpaRepositories(basePackages = "com.librarymanagement.repository")
 public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -78,7 +78,7 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.customermanageexceptionhandler.model");
+        em.setPackagesToScan("com.librarymanagement.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -90,7 +90,7 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/customer_jpa_store?createDatabaseIfNotExist=true&serverTimezone=UTC");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/library_db?createDatabaseIfNotExist=true&serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("Hoangcuong93");
         return dataSource;

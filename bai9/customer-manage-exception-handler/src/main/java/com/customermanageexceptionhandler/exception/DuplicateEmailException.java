@@ -1,4 +1,4 @@
 package com.customermanageexceptionhandler.exception;
 
-public class DuplicateEmailException {
+public class DuplicateEmailException extends Exception {
 }

@@ -1,10 +1,13 @@
+<!-- src/main/webapp/WEB-INF/views/error-out-of-book.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Out of Book</title>
 </head>
 <body>
-$END$
+<h1>Out of Book</h1>
+<p>The requested book is currently out of stock.</p>
+<a th:href="@{/books}">Back to list</a>
 </body>
 </html>

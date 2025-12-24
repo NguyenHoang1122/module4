@@ -1,10 +1,24 @@
+<!-- src/main/webapp/WEB-INF/views/book/view.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title th:text="${book.title}">Book</title>
 </head>
 <body>
-$END$
+<h1 th:text="${book.title}">Title</h1>
+<p>Author: <span th:text="${book.author}">Author</span></p>
+<p>Quantity: <span th:text="${book.quantity}">0</span></p>
+
+<form th:action="@{/books/borrow/{id}(id=${book.id})}" method="post">
+    <button type="submit">Borrow</button>
+</form>
+
+<form th:action="@{/books/return}" method="post">
+    <input type="text" name="code" placeholder="Enter return code"/>
+    <button type="submit">Return</button>
+</form>
+
+<a th:href="@{/books}">Back</a>
 </body>
 </html>

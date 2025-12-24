@@ -1,4 +1,4 @@
 package com.librarymanagement.exception;
 
-public class InvalidBorrowCodeException {
+public class InvalidBorrowCodeException extends  RuntimeException {
 }

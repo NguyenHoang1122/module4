@@ -1,4 +1,4 @@
-package com.customermanageexceptionhandler.configuration;
+package com.librarymanagement.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

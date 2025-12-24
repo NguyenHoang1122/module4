@@ -1,4 +1,7 @@
 package com.customermanageexceptionhandler.service;
 
-public interface ICustomerService {
+import com.customermanageexceptionhandler.model.Customer;
+
+public interface ICustomerService extends IGenerateService<Customer> {
+
 }

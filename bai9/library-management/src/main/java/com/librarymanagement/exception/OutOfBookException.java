@@ -1,4 +1,4 @@
 package com.librarymanagement.exception;
 
-public class OutOfBookException {
+public class OutOfBookException extends RuntimeException {
 }
