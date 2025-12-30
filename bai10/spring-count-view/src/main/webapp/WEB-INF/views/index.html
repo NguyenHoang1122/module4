@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Counter</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f2f6fc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .counter-box {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px 50px;
+            text-align: center;
+        }
+
+        .counter-box h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .counter-box p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .counter-box button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .counter-box button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="counter-box">
+    <h1 th:text="'Số lượt truy cập phiên này: ' + ${counter.count}"></h1>
+    <p>Hãy tải lại trang để tăng lượt đếm!</p>
+    <form method="get" th:action="@{/}">
+        <button type="submit">Tải lại trang</button>
+    </form>
+</div>
+</body>
+</html>

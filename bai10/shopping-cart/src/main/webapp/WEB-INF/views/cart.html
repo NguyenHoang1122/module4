@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .back-link {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .summary {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .summary h3 {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="back-link">
+    <a href="/shop">← Back to Shop</a>
+</div>
+
+<h1>Your Shopping Cart</h1>
+
+<form th:action="@{/shop}" th:object="${cart}" method="post">
+    <div class="summary">
+        <h3>Total Items: <span th:text="${cart.countItemQuantity()}"></span></h3>
+        <h3>Total Products: <span th:text="${cart.countProductQuantity()}"></span></h3>
+    </div>
+
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="product : ${cart.products}">
+            <td th:text="${product.getKey().name}"></td>
+            <td th:text="${product.getValue()}"></td>
+            <td th:text="${#numbers.formatDecimal(product.getKey().price, 0, 0)} + 'đ'"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Total Payment</strong></td>
+            <td th:text="${#numbers.formatDecimal(cart.countTotalPayment(), 0, 0)} + ' đ'"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
