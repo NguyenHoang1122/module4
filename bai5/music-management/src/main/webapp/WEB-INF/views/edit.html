@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit Song</title>
 </head>
 <body>
-
+<h3>Edit Song</h3>
+<form th:action="@{/songs/edit/{id}(id=${songForm.id})}" th:object="${songForm}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required/>
+    </div>
+    <div>
+        <label>Artist:</label>
+        <input type="text" th:field="*{artist}" required/>
+    </div>
+    <div>
+        <label>Category:</label>
+        <input type="text" th:field="*{category}" required/>
+    </div>
+    <div>
+        <label>Replace File (optional):</label>
+        <input type="file" th:field="*{filePath}" accept="audio/*,video/mp4"/>
+    </div>
+    <div th:if="${oldFile}">
+        <p>Current file: <a th:href="${oldFile}" th:text="${oldFile}" target="_blank"></a></p>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+        <a th:href="@{/songs}">Back</a>
+    </div>
+</form>
 </body>
 </html>

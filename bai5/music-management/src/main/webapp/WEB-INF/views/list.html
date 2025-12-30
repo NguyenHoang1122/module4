@@ -7,7 +7,7 @@
 <body>
 <h3>Songs</h3>
 <p>
-    <a href="/create">Create New Song</a>
+    <a href="/songs/create">Create New Song</a>
 </p>
 <table>
     <thead>
@@ -16,7 +16,7 @@
         <th>Name</th>
         <th>Artist</th>
         <th>Category</th>
-        <th>FilePath</th>
+        <th>Play</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -28,13 +28,13 @@
         <td th:text="${song.getArtist()}"></td>
         <td th:text="${song.getCategory()}"></td>
         <td>
-            <a th:href="${song.filePath}" th:text="${song.filePath}" target="_blank"></a>
+            <a th:href="@{/songs/play/{id}(id=${song.getId()})}">Play</a>
         </td>
         <td>
-            <a th:href="@{/songs/{id}/edit(id=${song.getId()})}">Edit</a>
+            <a th:href="@{/songs/edit/{id}(id=${song.getId()})}">Edit</a>
         </td>
         <td>
-            <a th:href="@{/songs/{id}/delete(id=${song.getId()})}">Delete</a>
+            <a th:href="@{/songs/delete/{id}(id=${song.getId()})}">Delete</a>
         </td>
     </tr>
     </tbody>

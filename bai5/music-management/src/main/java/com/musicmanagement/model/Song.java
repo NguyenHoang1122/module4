@@ -1,6 +1,9 @@
 package com.musicmanagement.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "songs")
@@ -8,9 +11,26 @@ public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank(message = "Tên bài hát không được để trống")
+    @Size(max = 800, message = "Tên bài hát không vượt quá 800 ký tự")
+    @Pattern(
+            regexp = "^[^@;,.=\\-+]+$",
+            message = "Tên bài hát không chứa ký tự đặc biệt"
+    )
     private String name;
+    @NotBlank(message = "Nghệ sĩ không được để trống")
+    @Size(max = 300, message = "Tên nghệ sĩ không vượt quá 300 ký tự")
+    @Pattern(
+            regexp = "^[^@;,.=\\-+]+$",
+            message = "Tên nghệ sĩ không chứa ký tự đặc biệt"
+    )
     private String artist;
+    @NotBlank(message = "Thể loại nhạc không được để trống")
+    @Size(max = 1000, message = "Thể loại nhạc không vượt quá 1000 ký tự")
+    @Pattern(
+            regexp = "^[a-zA-ZÀ-ỹ\\s,]+$",
+            message = "Thể loại chỉ được phép chứa chữ cái, khoảng trắng và dấu phẩy"
+    )
     private String category;
     private String filePath;
 

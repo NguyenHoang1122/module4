@@ -28,6 +28,8 @@ dependencies {
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.1.0'
     implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
+    implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.2'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.5.Final'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

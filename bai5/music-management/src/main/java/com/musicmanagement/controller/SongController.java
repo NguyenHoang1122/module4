@@ -1,13 +1,14 @@
 package com.musicmanagement.controller;
 
-
 import com.musicmanagement.model.Song;
 import com.musicmanagement.model.SongForm;
 import com.musicmanagement.service.ISongService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,8 +50,11 @@ public class SongController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute SongForm form) {
-
+    public String create(@Valid @ModelAttribute SongForm form,
+    BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+        return "/create";
+    }
         Song song = new Song();
         song.setName(form.getName());
         song.setArtist(form.getArtist());
@@ -75,6 +79,7 @@ public class SongController {
         }
 
         songService.save(song);
+        model.addAttribute("song", song);
         return "redirect:/songs";
     }
 
@@ -127,5 +132,17 @@ public class SongController {
         return "redirect:/songs";
     }
 
+    // New: play a song by id
+    @GetMapping("/play/{id}")
+    public String play(@PathVariable("id") Long id, Model model) {
+        Song song = songService.findById(id);
+        model.addAttribute("song", song);
+        return "/play";
+    }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        songService.remove(id);
+        return "redirect:/songs";
+    }
 }

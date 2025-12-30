@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Song</title>
 </head>
 <body>
-
+<h3>Create New Song</h3>
+<form th:action="@{/songs/create}" th:object="${songForm}" method="post" enctype="multipart/form-data">
+    <div>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" />
+        <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+    <div>
+        <label>Artist:</label>
+        <input type="text" th:field="*{artist}" />
+        <div style="color: red" th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}"></div>
+    </div>
+    <div>
+        <label>Category:</label>
+        <input type="text" th:field="*{category}" />
+        <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+    </div>
+    <div>
+        <label>File (mp3, mp4, wav, m4a):</label>
+        <input type="file" th:field="*{filePath}" accept="audio/*,video/mp4"/>
+    </div>
+    <div>
+        <button type="submit">Create</button>
+        <a th:href="@{/songs}">Back</a>
+    </div>
+</form>
 </body>
 </html>

@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${song != null} ? ${song.name} : 'Play'">Play</title>
 </head>
 <body>
+<h3 th:text="${song != null} ? ${song.name} : 'No song'">Song</h3>
+<p th:if="${song != null}">
+    Artist: <span th:text="${song.artist}">Artist</span>
+</p>
 
+<div th:if="${song == null or song.filePath == null}">
+    <p>No file available to play.</p>
+</div>
+
+<div th:if="${song != null and song.filePath != null}">
+    <!-- Video for .mp4 files -->
+    <div th:if="${#strings.endsWith(song.filePath, '.mp4')}">
+        <video controls style="max-width:100%;height:auto;">
+            <source th:src="${song.filePath}" type="video/mp4"/>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Audio for other common audio extensions -->
+    <div th:if="${not #strings.endsWith(song.filePath, '.mp4')}">
+        <audio controls>
+            <source th:src="${song.filePath}"
+                    th:type="${#strings.endsWith(song.filePath, '.m4a') ? 'audio/mp4' : (#strings.endsWith(song.filePath, '.wav') ? 'audio/wav' : 'audio/mpeg')}"/>
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>
+
+<p>
+    <a th:href="@{/songs}">Back to list</a>
+</p>
 </body>
 </html>
