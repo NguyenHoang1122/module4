@@ -1,4 +1,4 @@
-package com.blogapp.model;
+package com.blogapprestful.model;
 
 import jakarta.persistence.*;
 
@@ -68,4 +68,6 @@ public class Blog {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }

@@ -1,6 +1,6 @@
-package com.blogapp.repository;
+package com.blogapprestful.repository;
 
-import com.blogapp.model.Category;
+import com.blogapprestful.model.Category;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ICategoryRepository extends CrudRepository<Category,Long> {

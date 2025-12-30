@@ -1,8 +1,8 @@
-package com.blogapp.controller;
+package com.blogapprestful.controller;
 
-import com.blogapp.model.Blog;
-import com.blogapp.service.IBlogService;
-import com.blogapp.service.ICategoryService;
+import com.blogapprestful.model.Blog;
+import com.blogapprestful.service.IBlogService;
+import com.blogapprestful.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,12 +64,6 @@ public class BlogController {
         return modelAndView;
     }
 
-    @GetMapping
-    public String listBlogs(Model model) {
-        model.addAttribute("blogs", iBlogService.findAll());
-        return "blog/list";
-    }
-
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("blog", new Blog());
@@ -103,16 +97,6 @@ public class BlogController {
         model.addAttribute("categories", categoryService.findAll());
         return "blog/edit";
     }
-
-//    Optional<Blog> optionalBlog = iBlogService.findById(id);
-//        if (optionalBlog.isPresent()) {
-//        Blog blog = optionalBlog.get();
-//        model.addAttribute("blog", blog);
-//        model.addAttribute("categories", categoryService.findAll());
-//        return "blog/edit";
-//    }
-//        return "redirect:/blogs";
-
 
     @PostMapping("/{id}/update")
     public String updateBlog(@PathVariable("id") Long id, @ModelAttribute("blog") Blog blog) {

@@ -1,4 +1,4 @@
-package com.blogapp.service;
+package com.blogapprestful.service;
 
 import java.util.Optional;
 

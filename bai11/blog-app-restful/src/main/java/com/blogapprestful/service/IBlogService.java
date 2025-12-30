@@ -1,8 +1,11 @@
-package com.blogapp.service;
+package com.blogapprestful.service;
 
-import com.blogapp.model.Blog;
+import com.blogapprestful.model.Blog;
+import com.blogapprestful.model.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface IBlogService extends IGenerateService<Blog> {
     Page<Blog> findAll(Pageable pageable);

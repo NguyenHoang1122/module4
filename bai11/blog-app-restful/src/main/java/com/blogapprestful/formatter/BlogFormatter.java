@@ -1,8 +1,7 @@
-package com.blogapp.formatter;
+package com.blogapprestful.formatter;
 
-import com.blogapp.model.Blog;
-import com.blogapp.repository.IBlogRepository;
-import com.blogapp.service.IBlogService;
+import com.blogapprestful.model.Blog;
+import com.blogapprestful.service.IBlogService;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 

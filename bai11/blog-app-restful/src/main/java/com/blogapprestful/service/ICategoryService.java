@@ -1,6 +1,6 @@
-package com.blogapp.service;
+package com.blogapprestful.service;
 
-import com.blogapp.model.Category;
+import com.blogapprestful.model.Category;
 
 public interface ICategoryService extends  IGenerateService<Category> {
 

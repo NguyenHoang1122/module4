@@ -1,12 +1,14 @@
-package com.blogapp.service.impl;
+package com.blogapprestful.service.impl;
 
-import com.blogapp.model.Blog;
-import com.blogapp.repository.IBlogRepository;
-import com.blogapp.service.IBlogService;
+
+import com.blogapprestful.model.Blog;
+import com.blogapprestful.repository.IBlogRepository;
+import com.blogapprestful.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Optional;
 
@@ -51,5 +53,4 @@ public class BlogSevice implements IBlogService {
     public Page<Blog> findAllByTitleContaining(Pageable pageable, String title) {
         return blogRepository.findAllByTitleContaining(pageable, title);
     }
-
 }
