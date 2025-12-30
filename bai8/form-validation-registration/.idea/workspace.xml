@@ -4,10 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50937c3c-9070-4e24-b849-911c23f63004" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../bai1/currency-converter/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai1/currency-converter/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai6/customer-management-jpa/src/main/java/com/customermanagementjpa/configuration/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai6/customer-management-jpa/src/main/java/com/customermanagementjpa/configuration/AppConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai7/customer-province-management/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai7/customer-province-management/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="efcb0579-d169-495c-892e-22ec85f0dfcd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/configuration/AppConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/configuration/AppInit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/controller/PhoneController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/model/PhoneNumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/resources/validation-message.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/webapp/WEB-INF/views/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/webapp/WEB-INF/views/result.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/configuration/AppConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/configuration/AppInit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/controller/FormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/service/IUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai11/blog-app-restful/.idea/copilot.data.migration.agent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai11/blog-app-restful/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/configuration/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/configuration/AppConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/controller/SongController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/controller/SongController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/Song.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/SongForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/SongForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/play.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/play.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bai6/blog-app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai6/blog-app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,29 +46,27 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option value="Interface" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;NguyenHoang1122&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "NguyenHoang1122"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/NguyenHoang1122/module4.git&quot;,
-    &quot;accountId&quot;: &quot;c60a99b9-5f8b-4496-8beb-cd90fb887394&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/NguyenHoang1122/module4.git",
+    "accountId": "c60a99b9-5f8b-4496-8beb-cd90fb887394"
   }
-}</component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/resources/validation-message.properties" root0="FORCE_HIGHLIGHTING" />
-  </component>
+}]]></component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -52,10 +74,11 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
-}</component>
-  <component name="ProjectId" id="36GqtIKh4Bf8E20UNSpL0DEeS04" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="37XsAA9ll6yHqukNgzrfOZysq9S" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,24 +91,30 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Tomcat Server.Tomcat 10.1.43.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/codegym/module4/bai8/form-validation-registration",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "File.Encoding",
+    "settings.editor.selected.configurable": "reference.settings.grazie.pro.style.in.ai.assistant",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\codegym\module4\bai8\form-validation-registration\src\main\java\com\formvalidationregistration" />
-    </key>
+  <component name="RunDashboard">
+    <option name="configurationStatuses">
+      <map>
+        <entry key="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+          <value>
+            <map>
+              <entry key="Tomcat 10.1.43" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="Tomcat 10.1.43" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.43" ALTERNATIVE_JRE_ENABLED="false">
@@ -99,7 +128,7 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="1c0c8b0b-578e-42c5-b9fc-2b8312321824" />
+        <option name="BASE_DIRECTORY_NAME" value="3e78f351-e30d-4dd4-affd-669a4d95ddd3" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -107,7 +136,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="52379" />
+        <option name="DEBUG_PORT" value="49570" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -187,22 +216,17 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="50937c3c-9070-4e24-b849-911c23f63004" name="Changes" comment="" />
-      <created>1764643470174</created>
+      <changelist id="efcb0579-d169-495c-892e-22ec85f0dfcd" name="Changes" comment="" />
+      <created>1767060605502</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1764643470174</updated>
-      <workItem from="1764643470801" duration="14578000" />
-      <workItem from="1766112432540" duration="713000" />
+      <updated>1767060605502</updated>
+      <workItem from="1767060606918" duration="4527000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
