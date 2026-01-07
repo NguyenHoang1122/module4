@@ -23,14 +23,16 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
-    implementation "org.springframework:spring-webmvc:6.2.6"
-    implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
-    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.2.RELEASE'
-    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
-    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-    implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.5.2.Final'
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '6.0.13'
+    implementation group: 'org.springframework', name: 'spring-orm', version: '6.0.13'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '6.0.13'
+    implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.2.7.Final'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring6', version: '3.1.1.RELEASE'
+    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.1.0'
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
     implementation("org.springframework.data:spring-data-jpa:3.4.2")
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
+    compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
