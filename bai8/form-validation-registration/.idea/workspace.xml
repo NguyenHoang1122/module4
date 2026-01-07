@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efcb0579-d169-495c-892e-22ec85f0dfcd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/configuration/AppConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/configuration/AppInit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/controller/PhoneController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/java/com/customizephonevalidate/model/PhoneNumber.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/resources/validation-message.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/webapp/WEB-INF/views/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../customize-phone-validate/src/main/webapp/WEB-INF/views/result.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/configuration/AppConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/configuration/AppInit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/controller/FormController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/service/IUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/formvalidationregistration/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../bai11/blog-app-restful/.idea/copilot.data.migration.agent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai11/blog-app-restful/.idea/copilot.data.migration.agent.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/configuration/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/configuration/AppConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/controller/SongController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/controller/SongController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/Song.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/SongForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/java/com/musicmanagement/model/SongForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/play.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai5/music-management/src/main/webapp/WEB-INF/views/play.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../bai6/blog-app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../bai6/blog-app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -221,7 +197,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1767060605502</updated>
-      <workItem from="1767060606918" duration="4527000" />
+      <workItem from="1767060606918" duration="5046000" />
     </task>
     <servers />
   </component>
