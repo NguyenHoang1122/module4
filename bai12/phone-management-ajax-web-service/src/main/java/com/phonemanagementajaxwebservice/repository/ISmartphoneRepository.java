@@ -1,4 +1,9 @@
 package com.phonemanagementajaxwebservice.repository;
 
-public interface ISmartphoneRepository {
+import com.phonemanagementajaxwebservice.model.Smartphone;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ISmartphoneRepository extends JpaRepository<Smartphone, Long> {
 }
