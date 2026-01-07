@@ -2,9 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>View Product</title>
 </head>
 <body>
-
+<h1>Thông Tin Sản Phẩm</h1>
+<table>
+    <tr>
+        <td>Code:</td>
+        <td th:text="${product.productCode}"></td>
+    </tr>
+    <tr>
+        <td>Name:</td>
+        <td th:text="${product.name}"></td>
+    </tr>
+    <tr>
+        <td>Description:</td>
+        <td th:text="${product.description}"></td>
+    </tr>
+    <tr>
+        <td>Price:</td>
+        <td th:text="${product.price}"></td>
+    </tr>
+    <tr>
+        <td>Image:</td>
+        <td>
+            <img th:src="@{'/image/' + ${product.image}}" alt="Product Image" width="200"/>
+        </td>
+    </tr>
+</table>
+<p>
+    <a th:href="@{/product}">Back to Product List</a>
+</p>
 </body>
 </html>

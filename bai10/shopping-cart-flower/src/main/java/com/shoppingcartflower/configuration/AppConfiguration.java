@@ -87,7 +87,7 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.shoppingcart.model");
+        em.setPackagesToScan("com.shoppingcartflower.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -100,7 +100,6 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/shop_flower?createDatabaseIfNotExist=true&serverTimezone=UTC");
-
         dataSource.setUsername("root");
         dataSource.setPassword("Hoangcuong93");
         return dataSource;

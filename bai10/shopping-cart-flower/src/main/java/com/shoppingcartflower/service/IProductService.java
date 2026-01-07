@@ -2,16 +2,15 @@ package com.shoppingcartflower.service;
 
 import com.shoppingcartflower.model.Product;
 
-import java.util.List;
+import java.util.Optional;
+
 
 public interface IProductService {
-    List<Product> findAll();
+    Iterable<Product> findAll();
+
+    Optional<Product> findById(Long id);
 
     void save(Product product);
-
-    Product findById(Long id);
-
-    void update(Long id, Product product);
 
     void remove(Long id);
 }

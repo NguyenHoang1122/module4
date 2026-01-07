@@ -1,9 +1,10 @@
 package com.shoppingcartflower.model;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Car {
+public class Cart{
     private Map<Product,Integer> products = new HashMap<>();
 
     public Cart() {
@@ -57,11 +58,17 @@ public class Car {
         return products.size();
     }
 
-    public Float countTotalPayment(){
-        float payment = 0;
+    public BigDecimal countTotalPayment() {
+        BigDecimal payment = BigDecimal.ZERO;
+
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            payment += entry.getKey().getPrice() * (float) entry.getValue();
+            BigDecimal price = entry.getKey().getPrice();
+            BigDecimal quantity = BigDecimal.valueOf(entry.getValue());
+
+            payment = payment.add(price.multiply(quantity));
         }
+
         return payment;
     }
+
 }

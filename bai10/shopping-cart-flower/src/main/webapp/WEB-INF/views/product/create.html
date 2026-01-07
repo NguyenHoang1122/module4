@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Create Product</title>
 </head>
 <body>
-<h3>Add Product</h3>
-<p>
-    <a th:href="@{/product}">
-        Back to product list
-    </a>
-</p>
-<div id="form">
-    <form th:object="${productForm}" th:action="@{/product/save}"
-          method="POST" novalidate="novalidate" enctype="multipart/form-data">
-        <input type="hidden" th:field="*{id}"/>
-        <table>
-            <tr>
-                <td><label for="name">Name</label></td>
-                <td><input type="text" id="name" th:field="*{name}"/></td>
-            </tr>
-            <tr>
-                <td><label for="price">Price</label></td>
-                <td><input type="number" id="price" th:field="*{price}"/></td>
-            </tr>
-            <tr>
-                <td><label for="image">Image</label></td>
-                <td><input type="file" id="image" th:field="*{image}"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Save"/></td>
-            </tr>
-        </table>
-    </form>
-</div>
+<h1>CREATE PRODUCT</h1>
+<form th:action="@{/product/save}" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Code:</td>
+            <td><input type="number" name="code"/></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+            <td>Mô tả:</td>
+            <td><input type="text" name="description"/></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" name="price"/></td>
+        </tr>
+        <tr>
+            <td>Image:</td>
+            <td><input type="file" name="image"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Save"/></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

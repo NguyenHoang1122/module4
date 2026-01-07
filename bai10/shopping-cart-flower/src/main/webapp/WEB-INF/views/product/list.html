@@ -3,27 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>List Product</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: red;
+            text-transform: uppercase;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-name {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .product-price {
+            color: red;
+            font-size: 18px;
+        }
+
+        .add-btn {
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-<h1>List Product</h1>
+
+<h1>Danh sách sản phẩm</h1>
+
 <p>
-    <a th:href="@{/product/create}">
+    <a class="add-btn" th:href="@{/product/create}">
         Add new product
     </a>
 </p>
-<table>
-    <tr>
-        <td>Name</td>
-        <td>Price</td>
-        <td>Image</td>
-    </tr>
-<th:block th:each="product : ${products}">
-    <tr>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.price}"></td>
-        <td><img width="100" height="100" th:src="@{'/image/' + ${product.image}}" alt="" src=""></td>
-    </tr>
-</th:block>
-</table>
+
+<div class="product-container">
+    <div class="product-item" th:each="product : ${products}">
+        <img th:src="@{'/image/' + ${product.image}}" alt="Product Image">
+
+        <div class="product-name">
+            <a th:href="@{/product/view/{id}(id=${product.id})}"
+               th:text="${product.name}">
+            </a>
+        </div>
+
+        <div class="product-price" th:text="${product.price + ' đ'}"></div>
+    </div>
+</div>
 </body>
 </html>
