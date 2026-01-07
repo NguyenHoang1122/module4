@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-
+        let currentId = null;
         $(document).ready(function () {
             successHandler();
         });
@@ -65,7 +65,7 @@
                 '<td>' + smartphone.model + '</td>' +
                 '<td>' + smartphone.price + '</td>' +
                 '<td><button onclick="deleteSmartphone(' + smartphone.id + ')">Delete</button></td>' +
-                '<td><button onclick="location.href=\'/update-smartphone/' + smartphone.id + '\'">Update</button></td>' +
+                '<td><button onclick="showUpdateForm(' + smartphone.id + ')">Update</button></td>' +
                 '</tr>';
         }
 
@@ -76,13 +76,59 @@
                 success: successHandler
             });
         }
-        function updateSmartphone(id) {
+
+        function showUpdateForm(id) {
+            currentId = id;
+            alert(currentId);
             $.ajax({
-                type: "PUT",
+                type: "GET",
                 url: "/api/smartphones/" + id,
-                success: successHandler
+                success: function (smartphone) {
+                    $('#producer').val(smartphone.producer);
+                    $('#model').val(smartphone.model);
+                    $('#price').val(smartphone.price);
+
+                    $('#submit-btn')
+                        .val('Update')
+                        .attr('onclick', 'updateSmartphone()');
+                    alert(smartphone);
+                }
+            });
+
+        }
+
+
+
+        function updateSmartphone() {
+            let smartphone = {
+                producer: $('#producer').val(),
+                model: $('#model').val(),
+                price: $('#price').val()
+            };
+
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "PUT",
+                url: "/api/smartphones/" + currentId,
+                data: JSON.stringify(smartphone),
+                success: function () {
+                    successHandler();
+
+                    // reset form
+                    $('#add-smartphone')[0].reset();
+                    $('#submit-btn')
+                        .val('Add')
+                        .attr('onclick', 'addNewSmartPhone()');
+
+                    currentId = null;
+                }
             });
         }
+
+
     </script>
 </head>
 <body>
@@ -115,7 +161,7 @@
         </tr>
         <tr>
             <td></td>
-            <td> <input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+            <input type="button" id="submit-btn" value="Add" onclick="addNewSmartPhone()">
         </tr>
     </table>
 </form>
